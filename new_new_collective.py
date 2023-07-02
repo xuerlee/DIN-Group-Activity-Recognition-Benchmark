@@ -12,3 +12,4 @@ import random
 
 import sys
 
+def new_collective_read_annotations(path,sid):
