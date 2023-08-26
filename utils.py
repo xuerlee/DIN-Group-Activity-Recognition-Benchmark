@@ -18,6 +18,20 @@ def prep_images(images):
 
     return images
 
+def out_group_black(group_box, image):
+    """
+    make the areas out of the groups black
+    Args:
+        :param: image
+        :return: blacked image
+    """
+    image[..., :int(group_box[1]), :] = 0
+    image[..., int(group_box[3]):, :] = 0
+    image[..., int(group_box[1]):int(group_box[3]), :int(group_box[0])] = 0
+    image[..., int(group_box[1]):int(group_box[3]), int(group_box[2]):] = 0
+
+    return image
+
 # def prep_images(images):
 #     """
 #     preprocess images

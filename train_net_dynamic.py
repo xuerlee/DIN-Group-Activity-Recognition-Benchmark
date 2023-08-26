@@ -40,7 +40,7 @@ def train_net(cfg):
     params = {
         'batch_size': cfg.batch_size,
         'shuffle': True,
-        'num_workers': 4, # 4,
+        'num_workers': 4,  # 4,
     }
     training_loader=data.DataLoader(training_set,**params)
     
@@ -70,7 +70,8 @@ def train_net(cfg):
                  'at_volleyball':AT_volleyball,
                  'arg_volleyball':ARG_volleyball,
                  'sacrf_biute_volleyball':SACRF_BiUTE_volleyball,
-                 'dynamic_collective':Dynamic_collective}
+                 'dynamic_collective':Dynamic_collective,
+                 'dynamic_new_new_collective':Dynamic_new_new_collective,}
     
     if cfg.training_stage==1:
         Basenet = basenet_list[cfg.dataset_name]

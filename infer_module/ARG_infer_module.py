@@ -1,6 +1,7 @@
 from backbone.backbone import *
 from utils import *
-from roi_align.roi_align import RoIAlign  # RoIAlign module
+# from roi_align.roi_align import RoIAlign  # RoIAlign module
+from torchvision.ops import RoIAlign
 
 
 class GCN_Module(nn.Module):
