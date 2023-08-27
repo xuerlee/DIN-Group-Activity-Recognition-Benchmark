@@ -19,7 +19,8 @@ cfg.num_activities=5
 cfg.num_frames=10
 
 cfg.batch_size=2
-cfg.test_batch_size=8 
+# cfg.batch_size=32
+cfg.test_batch_size=8
 cfg.train_learning_rate=1e-5
 cfg.train_dropout_prob=0.5
 cfg.weight_decay=1e-2

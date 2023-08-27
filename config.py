@@ -37,6 +37,7 @@ class Config(object):
 
         elif dataset_name=='new_new_collective':
             self.data_path = '/home/jiqqi/data/new-new-collective' #data path for the new_new_collective dataset
+            # self.data_path = '/home/travail/jiaqi/dataset/new-new-collective' #data path for the new_new_collective dataset
             self.train_seqs = [1, 2, 4, 12, 13, 14, 23, 28, 29, 30, 31, 36, 41, 42,
               43, 45, 58, 59, 68, 72]  #video id list of train set
             self.test_seqs = [3, 10, 26, 33, 46, 63, 74]  #video id list of test set
