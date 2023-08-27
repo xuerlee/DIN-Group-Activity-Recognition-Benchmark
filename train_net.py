@@ -39,12 +39,12 @@ def train_net(cfg):
     show_config(cfg)  # set batch_size in train.....py
     
     # Reading dataset
-    training_set,validation_set=return_dataset(cfg)
+    training_set,validation_set = return_dataset(cfg)
     
     params = {
         'batch_size': cfg.batch_size,
         'shuffle': True,
-        'num_workers': 4
+        'num_workers': 0
     }
     training_loader=data.DataLoader(training_set,**params)
     
@@ -488,6 +488,8 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
 
         print('total_loss:', total_loss)
         writer.add_scalar('Total loss', total_loss, i)
+        writer.add_scalar('activities loss', activities_loss, i)
+        writer.add_scalar('action loss', actions_loss, i)
 
         # Optim
         optimizer.zero_grad()

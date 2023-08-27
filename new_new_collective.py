@@ -184,18 +184,22 @@ class NewNewCollectiveDataset(data.Dataset):
         if self.is_finetune:
             if self.is_training:
                 if src_fid + self.num_frames - 1 < FRAMES_NUM[sid]:
-                    fid = random.randint(src_fid, src_fid + self.num_frames - 1)  # choose frame between e.g. random(205,214), not the ann id exactly. kind of shuffling
+                    fid = random.randint(src_fid, src_fid + self.num_frames)  # choose frame between e.g. random(205,214), not the ann id exactly. kind of shuffling
                     return [(sid, src_fid, fid)]
                 else:
-                    fid = FRAMES_NUM[sid]
+                    fid = random.randint(src_fid, FRAMES_NUM[sid])
                     return [(sid, src_fid, fid)]
 
             else:
                 if src_fid + self.num_frames - 1 < FRAMES_NUM[sid]:
                     return [(sid, src_fid, fid)
-                            for fid in range(src_fid, src_fid + self.num_frames)]
+                            for fid in range(src_fid, src_fid + self.num_frames)]  # each test loading 10 frames
                 else:
-                    return [(sid, src_fid, FRAMES_NUM[sid])]
+                    list1 = [(sid, src_fid, fid)
+                            for fid in range(src_fid, FRAMES_NUM[sid])]
+                    list2 = [(sid, src_fid, FRAMES_NUM[sid])] * (self.num_frames - len(list1))
+                    list = list1 + list2
+                    return list
 
 
         else:
@@ -369,7 +373,7 @@ class NewNewCollectiveDataset(data.Dataset):
         ]
         '''
 
-
+        print(len(images))
         images = np.stack(images)
         activities = np.array(activities, dtype=np.int32)
         bboxes_num = np.array(bboxes_num, dtype=np.int32)
