@@ -370,7 +370,7 @@ class NewNewCollectiveDataset(data.Dataset):
         bboxes_num = np.array(bboxes_num, dtype=np.int32)
         # bboxes = np.array(bboxes, dtype=np.float).reshape(-1, groups_num[i], self.num_boxes+1,5)  # the numbers of boxes are equal (including the group box)
         # actions = np.array(actions, dtype=np.int32).reshape(-1, groups_num[i], self.num_boxes)
-        bboxes = np.array(bboxes, dtype=np.float).reshape(-1, self.num_boxes, 4)  # the numbers of boxes are equal (including the group box)
+        bboxes = np.array(bboxes, dtype=np.float64).reshape(-1, self.num_boxes, 4)  # the numbers of boxes are equal (including the group box)
         actions = np.array(actions, dtype=np.int32).reshape(-1, self.num_boxes)
 
         # convert to pytorch tensor

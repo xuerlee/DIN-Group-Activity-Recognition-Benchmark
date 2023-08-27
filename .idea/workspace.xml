@@ -4,24 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="add newest CAD dataset">
-      <change afterPath="$PROJECT_DIR$/just_test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/train_new_new_collective_stage1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/train_new_new_collective_stage2_dynamic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/DIN_GAR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/DIN_GAR.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="train stage 1 for new_new_cad">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gcn_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gcn_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_module/ARG_infer_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_module/ARG_infer_module.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/new_new_collective.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_new_collective.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net_dynamic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,6 +235,8 @@
       <workItem from="1692745327891" duration="9528000" />
       <workItem from="1692898220806" duration="16418000" />
       <workItem from="1693012541334" duration="13531000" />
+      <workItem from="1693032314267" duration="211000" />
+      <workItem from="1693099980746" duration="2109000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -286,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1688275482081</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="train stage 1 for new_new_cad">
+      <created>1693032360711</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1693032360711</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -335,18 +329,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add newest CAD dataset" />
-    <option name="LAST_COMMIT_MESSAGE" value="add newest CAD dataset" />
+    <MESSAGE value="train stage 1 for new_new_cad" />
+    <option name="LAST_COMMIT_MESSAGE" value="train stage 1 for new_new_cad" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/new_new_collective.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="images_in_flat" />
@@ -357,7 +343,7 @@
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage2_dynamic.coverage" NAME="train_new_new_collective_stage2_dynamic Coverage Results" MODIFIED="1692172525947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1692168721642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$just_test.coverage" NAME="just_test Coverage Results" MODIFIED="1689379158718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693032251425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693104325351" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/infer_module/higcin_infer_module.py">
