@@ -36,6 +36,8 @@ class Basenet_volleyball(nn.Module):
         
         self.fc_actions=nn.Linear(NFB,self.cfg.num_actions)
         self.fc_activities=nn.Linear(NFB,self.cfg.num_activities)
+
+        # use fc layers to regress the actions and activities directly
         
         
         for m in self.modules():
@@ -361,7 +363,6 @@ class Basenet_new_new_collective(nn.Module):
         images_in_flat = torch.reshape(images_in, (B * T, 3, H, W))  # B*T, 3, H, W
         boxes_in = boxes_in.reshape(B * T, MAX_N, 4)
 
-        print(boxes_in)
 
         # Use backbone to extract features of images_in
         # Pre-precess first

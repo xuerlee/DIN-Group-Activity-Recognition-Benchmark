@@ -13,13 +13,20 @@ import random
 import xml.etree.ElementTree as ET
 import sys
 
-FRAMES_NUM = {1: 302, 2: 347, 3: 194, 4: 257, 10: 302}
+FRAMES_NUM = {1: 301, 2: 346, 3: 193, 4: 256, 10: 301, 12: 1083, 13: 850, 14: 722, 23: 310,
+              26: 733, 28: 469, 29: 634, 30: 355, 31: 689, 33: 192, 36: 912, 41: 706, 42: 418,
+              43: 409, 45: 150, 46: 173, 58: 628, 59: 898, 63: 432, 68: 944, 72: 750, 74: 398}
 
-FRAMES_SIZE = {1: (480, 720), 2: (480, 720), 3: (480, 720), 4: (480, 720), 10: (480, 720)}
+FRAMES_SIZE = {1: (480, 720), 2: (480, 720), 3: (480, 720), 4: (480, 720), 10: (480, 720),
+               12: (480, 720), 13: (480, 720), 14: (480, 720), 23: (450, 800), 26: (480, 720),
+               28: (480, 720), 29: (480, 720), 30: (480, 720), 31: (480, 720),  33: (480, 720),
+               36: (480, 720), 41: (480, 720), 42: (480, 720), 43: (480, 720), 45: (480, 640),
+               46: (480, 640), 58: (480, 640), 59: (480, 640), 63: (720, 1280), 68: (720, 1280),
+               72: (720, 1280), 74: (720, 1280)}
 
 IDIVIDUAL_ACTIVITIES = ['standing', 'jogging', 'dancing', 'walking', 'biking', 'none']  # individual activity
 # SECOND_ACTIVITIES = ['crossing', 'waiting', 'queueing', 'walking', 'talking', 'None']
-GROUP_ACTIVITIES = ['dancing', 'queueing', 'jogging', 'talking', 'none']  # group activity
+GROUP_ACTIVITIES = ['dancing', 'queuing', 'jogging', 'talking', 'none']  # group activity
 
 IDIVIDUAL_ACTIVITIES_ID = {a: i for i, a in enumerate(IDIVIDUAL_ACTIVITIES)}
 # SECOND_ACTIONS_ID = {a: i for i, a in enumerate(SECOND_ACTIVITIES)}
@@ -110,7 +117,7 @@ ann1-1: {groups: [{frame_id: 1, group_id: 1, ...}, {...}],
 
 
 def new_new_collective_all_frames(anns):
-    return [(s, f) for s in anns for f in anns[s]]
+    return [(s, f) for s in anns for f in anns[s] if f != 0]  # remove frame0000
 
 '''
 [(seq_id, frame_id), ...]
@@ -180,7 +187,7 @@ class NewNewCollectiveDataset(data.Dataset):
                     fid = random.randint(src_fid, src_fid + self.num_frames - 1)  # choose frame between e.g. random(205,214), not the ann id exactly. kind of shuffling
                     return [(sid, src_fid, fid)]
                 else:
-                    fid = random.randint(src_fid, FRAMES_NUM[sid])
+                    fid = FRAMES_NUM[sid]
                     return [(sid, src_fid, fid)]
 
             else:
@@ -188,8 +195,7 @@ class NewNewCollectiveDataset(data.Dataset):
                     return [(sid, src_fid, fid)
                             for fid in range(src_fid, src_fid + self.num_frames)]
                 else:
-                    return [(sid, src_fid, fid)
-                            for fid in range(src_fid, FRAMES_NUM[sid])]
+                    return [(sid, src_fid, FRAMES_NUM[sid])]
 
 
         else:
@@ -219,10 +225,9 @@ class NewNewCollectiveDataset(data.Dataset):
         bboxes_num = []
         # groups_num = []
 
-        print('selected frames:', select_frames)
 
         for i, (sid, src_fid, fid) in enumerate(select_frames):  # single frame
-
+            print('selected frames:', sid, src_fid, fid)
 
             # sequence id, ann id, frame id
             img = Image.open(self.images_path + '/ActivityDataset/seq%02d/frame%04d.jpg' % (sid, fid))  # frame_fid

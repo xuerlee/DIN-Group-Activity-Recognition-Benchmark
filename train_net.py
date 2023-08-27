@@ -15,6 +15,8 @@ from gcn_model import *
 from base_model import *
 from utils import *
 
+from torch.utils.tensorboard import SummaryWriter
+
 
 def set_bn_eval(m):
     classname = m.__class__.__name__
@@ -410,11 +412,15 @@ def test_collective(data_loader, model, device, epoch, cfg):
 
 
 def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
+    time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+    exp_name = '[%s_stage%d]<%s>' % (cfg.exp_note, cfg.training_stage, time_str)
+    writer = SummaryWriter('runs/%s' % exp_name)
+
     actions_meter = AverageMeter()
     activities_meter = AverageMeter()
     loss_meter = AverageMeter()
     epoch_timer = Timer()
-    for batch_data in data_loader:
+    for i, batch_data in enumerate(data_loader):
         # print('len_batch_data:', len(batch_data))
         '''
         batch_data: [tensor(image), tensor(bboxes)..., tensor()] (list: 5)
@@ -481,6 +487,7 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
         loss_meter.update(total_loss.item(), batch_size)
 
         print('total_loss:', total_loss)
+        writer.add_scalar('Total loss', total_loss, i)
 
         # Optim
         optimizer.zero_grad()
@@ -494,7 +501,7 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
         'activities_acc': activities_meter.avg * 100,
         'actions_acc': actions_meter.avg * 100
     }
-
+    writer.close()
     return train_info
 
 

@@ -37,8 +37,9 @@ class Config(object):
 
         elif dataset_name=='new_new_collective':
             self.data_path = '/home/jiqqi/data/new-new-collective' #data path for the new_new_collective dataset
-            self.train_seqs = [1, 2, 3, 4]  #video id list of train set
-            self.test_seqs = [10]  #video id list of test set
+            self.train_seqs = [1, 2, 4, 12, 13, 14, 23, 28, 29, 30, 31, 36, 41, 42,
+              43, 45, 58, 59, 68, 72]  #video id list of train set
+            self.test_seqs = [3, 10, 26, 33, 46, 63, 74]  #video id list of test set
 
         else:
             self.data_path='data/collective'  #data path for the collective dataset
@@ -87,7 +88,7 @@ class Config(object):
         self.training_stage=1  #specify stage1 or stage2
         self.stage1_model_path=''  #path of the base model, need to be set in stage2
         self.test_before_train=False
-        self.exp_note='Group-Activity-Recognition'
+        self.exp_note='Group-Activity-Recognition-nncad'
         self.exp_name=None
         self.set_bn_eval = False
         self.inference_module_name = 'dynamic_volleyball'
