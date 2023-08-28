@@ -100,13 +100,18 @@ def train_net(cfg):
     # Training iteration
     best_result={'epoch':0, 'activities_acc':0}
     start_epoch=1
+
+    time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+    exp_name = '[%s_stage%d]<%s>' % (cfg.exp_note, cfg.training_stage, time_str)
+    writer = SummaryWriter('runs/%s' % exp_name)
+
     for epoch in range(start_epoch, start_epoch+cfg.max_epoch):
-        
+
         if epoch in cfg.lr_plan:
             adjust_lr(optimizer, cfg.lr_plan[epoch])
             
         # One epoch of forward and backward
-        train_info=train(training_loader, model, device, optimizer, epoch, cfg)  # train from: train list, model list
+        train_info=train(training_loader, model, device, optimizer, epoch, cfg, writer)  # train from: train list, model list
         show_epoch_info('Train', cfg.log_path, train_info)
 
         # Test
@@ -138,7 +143,7 @@ def train_net(cfg):
     #                         print('model saved to:',filepath)
             else:
                 assert False
-    
+    writer.close()
    
 def train_volleyball(data_loader, model, device, optimizer, epoch, cfg):
     
@@ -411,10 +416,7 @@ def test_collective(data_loader, model, device, epoch, cfg):
     return test_info
 
 
-def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
-    time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-    exp_name = '[%s_stage%d]<%s>' % (cfg.exp_note, cfg.training_stage, time_str)
-    writer = SummaryWriter('runs/%s' % exp_name)
+def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, writer):
 
     actions_meter = AverageMeter()
     activities_meter = AverageMeter()
@@ -486,10 +488,9 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
         total_loss = activities_loss + cfg.actions_loss_weight * actions_loss
         loss_meter.update(total_loss.item(), batch_size)
 
-        print('total_loss:', total_loss)
-        writer.add_scalar('Total loss', total_loss, i)
-        writer.add_scalar('activities loss', activities_loss, i)
-        writer.add_scalar('action loss', actions_loss, i)
+        writer.add_scalar('Training loss', total_loss, i)
+        writer.add_scalar('Activities loss', activities_loss, i)
+        writer.add_scalar('Actions loss', actions_loss, i)
 
         # Optim
         optimizer.zero_grad()
@@ -503,7 +504,6 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg):
         'activities_acc': activities_meter.avg * 100,
         'actions_acc': actions_meter.avg * 100
     }
-    writer.close()
     return train_info
 
 
