@@ -1298,9 +1298,7 @@ class Dynamic_new_new_collective(nn.Module):
 
             # Dynamic graph inference
 
-            print('b', boxes_features)
             graph_boxes_features = self.DPI(boxes_features)
-            print('g', graph_boxes_features)
             torch.cuda.empty_cache()
 
             # cat graph_boxes_features with boxes_features
