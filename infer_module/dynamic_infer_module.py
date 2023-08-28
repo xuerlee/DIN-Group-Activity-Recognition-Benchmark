@@ -149,7 +149,8 @@ class Dynamic_Person_Inference(nn.Module):
 
         dynamic_ft = self.hidden_weight(dynamic_ft)
 
-        return dynamic_ft, ft_infer_MAD
+        # return dynamic_ft, ft_infer_MAD
+        return dynamic_ft
 
 
     def plain_infer_ratio(self, person_features, ratio):
@@ -490,6 +491,7 @@ class Hierarchical_Dynamic_Inference(nn.Module):
                 cfg = cfg)
 
     def forward(self, person_features):
+
         person_features_1 = self.DPI_1(person_features)
         person_features_1 = self.hier_LN(person_features_1)
         person_features_1 = F.relu(person_features_1, inplace = True)

@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="train stage 1 for new_new_cad">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gcn_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gcn_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infer_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_new_collective.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_new_collective.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/train_new_new_collective_stage2_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_new_new_collective_stage2_dynamic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_net_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net_dynamic.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +106,7 @@
       <recent name="$PROJECT_DIR$/scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train_new_new_collective_stage1">
+  <component name="RunManager" selected="Python.train_new_new_collective_stage2_dynamic">
     <configuration name="just_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DIN_GAR" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -192,9 +197,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train_new_new_collective_stage1" />
         <item itemvalue="Python.train_new_new_collective_stage2_dynamic" />
         <item itemvalue="Python.train_net" />
+        <item itemvalue="Python.train_new_new_collective_stage1" />
         <item itemvalue="Python.just_test" />
       </list>
     </recent_temporary>
@@ -239,7 +244,7 @@
       <workItem from="1693032314267" duration="211000" />
       <workItem from="1693099980746" duration="12400000" />
       <workItem from="1693160606721" duration="8672000" />
-      <workItem from="1693236032618" duration="5853000" />
+      <workItem from="1693236032618" duration="17247000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -318,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693172021104</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="train stage 1 for new_new_cad">
+      <created>1693251760692</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1693251760692</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -378,10 +390,10 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage2_dynamic.coverage" NAME="train_new_new_collective_stage2_dynamic Coverage Results" MODIFIED="1692172525947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1692168721642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage2_dynamic.coverage" NAME="train_new_new_collective_stage2_dynamic Coverage Results" MODIFIED="1693265633049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1693258228374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$just_test.coverage" NAME="just_test Coverage Results" MODIFIED="1689379158718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693171739078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693251696579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/infer_module/higcin_infer_module.py">

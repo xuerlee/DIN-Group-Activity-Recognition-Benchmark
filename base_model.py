@@ -37,7 +37,7 @@ class Basenet_volleyball(nn.Module):
         self.fc_actions=nn.Linear(NFB,self.cfg.num_actions)
         self.fc_activities=nn.Linear(NFB,self.cfg.num_activities)
 
-        # use fc layers to regress the actions and activities directly
+
         
         
         for m in self.modules():
@@ -299,6 +299,8 @@ class Basenet_new_new_collective(nn.Module):
         D = self.cfg.emb_features
         K = self.cfg.crop_size[0]
         NFB = self.cfg.num_features_boxes
+
+
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
 
         self.backbone = MyInception_v3(transform_input=False, pretrained=True)
@@ -316,6 +318,8 @@ class Basenet_new_new_collective(nn.Module):
 
         self.fc_actions = nn.Linear(NFB, self.cfg.num_actions)
         self.fc_activities = nn.Linear(NFB, self.cfg.num_activities)
+
+        # use fc layers to regress the actions and activities directly
 
         for m in self.modules():
             if isinstance(m, nn.Linear):

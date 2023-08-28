@@ -211,10 +211,22 @@ class NewNewCollectiveDataset(data.Dataset):
             #     sample_frames=[ src_fid, src_fid+3, src_fid+6, src_fid+1, src_fid+4, src_fid+7, src_fid+2, src_fid+5, src_fid+8 ]
             #     return [(sid, src_fid, fid) for fid in sample_frames]
             if self.is_training:
-                return [(sid, src_fid, fid) for fid in range(src_fid, src_fid + self.num_frames)]
+                if src_fid + self.num_frames - 1 < FRAMES_NUM[sid]:
+                    fid = random.randint(src_fid, src_fid + self.num_frames)  # choose frame between e.g. random(205,214), not the ann id exactly. kind of shuffling
+                    return [(sid, src_fid, fid)]
+                else:
+                    fid = random.randint(src_fid, FRAMES_NUM[sid])
+                    return [(sid, src_fid, fid)]
             else:
-                return [(sid, src_fid, fid) for fid in range(src_fid, src_fid + self.num_frames)]
-
+                if src_fid + self.num_frames - 1 < FRAMES_NUM[sid]:
+                    return [(sid, src_fid, fid)
+                            for fid in range(src_fid, src_fid + self.num_frames)]  # each test loading 10 frames
+                else:
+                    list1 = [(sid, src_fid, fid)
+                            for fid in range(src_fid, FRAMES_NUM[sid])]
+                    list2 = [(sid, src_fid, FRAMES_NUM[sid])] * (self.num_frames - len(list1))
+                    list = list1 + list2
+                    return list
     def load_samples_sequence(self, select_frames):
         """
         load samples sequence
