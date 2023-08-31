@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="train stage 2 for new_new_cad">
+    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="reorganize batch of images">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_module/dynamic_infer_module.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_new_collective.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_new_collective.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net_dynamic.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +240,7 @@
       <workItem from="1693160606721" duration="8672000" />
       <workItem from="1693236032618" duration="18257000" />
       <workItem from="1693321950199" duration="28117000" />
-      <workItem from="1693430400187" duration="8841000" />
+      <workItem from="1693430400187" duration="10847000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -345,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693266688064</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="reorganize batch of images">
+      <created>1693460966907</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1693460966907</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -396,7 +398,8 @@
     <MESSAGE value="add newest CAD dataset" />
     <MESSAGE value="train stage 1 for new_new_cad" />
     <MESSAGE value="train stage 2 for new_new_cad" />
-    <option name="LAST_COMMIT_MESSAGE" value="train stage 2 for new_new_cad" />
+    <MESSAGE value="reorganize batch of images" />
+    <option name="LAST_COMMIT_MESSAGE" value="reorganize batch of images" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

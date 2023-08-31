@@ -77,6 +77,7 @@ def train_net(cfg):
     if cfg.training_stage==1:
         Basenet=basenet_list[cfg.dataset_name]
         model=Basenet(cfg)
+        # model.loadmodel('/home/travail/jiaqi/code/DIN-Group-Activity-Recognition-Benchmark/result/[New_new_collective_stage1_stage1]<2023-08-31_01-53-28>/stage1_epoch3_7.51%.pth')
     elif cfg.training_stage==2:
         GCNnet=gcnnet_list[cfg.dataset_name]
         model=GCNnet(cfg)
@@ -141,7 +142,7 @@ def train_net(cfg):
                 }
                 filepath=cfg.result_path+'/stage%d_epoch%d_%.2f%%.pth'%(cfg.training_stage,epoch,test_info['activities_acc'])
                 torch.save(state, filepath)
-                print('model saved to:',filepath)   
+                print('model saved to:',filepath)
             elif cfg.training_stage==1:
                 if test_info['activities_acc'] == best_result['activities_acc']:
                     for m in model.modules():
