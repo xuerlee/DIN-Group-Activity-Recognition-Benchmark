@@ -474,6 +474,7 @@ class Hierarchical_Dynamic_Inference(nn.Module):
                  parallel_inference = parallel_inference,
                  cfg = cfg)
 
+
         self.hier_LN = nn.LayerNorm(person_mat_shape + (1024,))
         self.dropout = nn.Dropout(0.3)
 
@@ -491,7 +492,6 @@ class Hierarchical_Dynamic_Inference(nn.Module):
                 cfg = cfg)
 
     def forward(self, person_features):
-
         person_features_1 = self.DPI_1(person_features)
         person_features_1 = self.hier_LN(person_features_1)
         person_features_1 = F.relu(person_features_1, inplace = True)

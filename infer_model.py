@@ -1229,14 +1229,16 @@ class Dynamic_new_new_collective(nn.Module):
 
         # read config parameters
         B = images_in.shape[0]
-        T = images_in.shape[1]
+        # T = images_in.shape[1]
+        T = 1
+
         H, W = self.cfg.image_size
         OH, OW = self.cfg.out_size
         MAX_N = self.cfg.num_boxes
         NFB = self.cfg.num_features_boxes
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
-
         # Reshape the input data
+        print(images_in.shape[0])
         images_in_flat = torch.reshape(images_in, (B * T, 3, H, W))  # B*T, 3, H, W
         boxes_in = boxes_in.reshape(B * T, MAX_N, 4)
 

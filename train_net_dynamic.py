@@ -40,12 +40,20 @@ def train_net(cfg):
     
     # Reading dataset
     training_set,validation_set = return_dataset(cfg)
-    
-    params = {
-        'batch_size': cfg.batch_size,
-        'shuffle': True,
-        'num_workers': 4
-    }
+
+    if cfg.dataset_name == 'new_new_collective':
+        params = {
+            'batch_size': cfg.batch_size,
+            'shuffle': True,
+            'num_workers': 0,
+            'collate_fn': training_set.collate_fn
+        }
+    else:
+        params = {
+            'batch_size': cfg.batch_size,
+            'shuffle': True,
+            'num_workers': 0,
+        }
     training_loader=data.DataLoader(training_set,**params)
     
     params['batch_size']=cfg.test_batch_size
@@ -374,7 +382,7 @@ def train_collective(data_loader, model, device, optimizer, epoch, cfg):
         # Predict activities
         activities_loss=F.cross_entropy(activities_scores,activities_in)
         activities_labels=torch.argmax(activities_scores,dim=1)  #B*T,
-        activities_correct=torch.sum(torch.eq(activities_labels.int(),activities_in.int()).float())
+        activities_correct=torch.sum(torch.eq(activities_labels.int(), activities_in.int()).float())
         activities_accuracy=activities_correct.item()/activities_scores.shape[0]
         activities_meter.update(activities_accuracy, activities_scores.shape[0])
         activities_conf.add(activities_labels, activities_in)
@@ -446,7 +454,7 @@ def test_collective(data_loader, model, device, epoch, cfg):
                 activities_in=activities_in[:,0].reshape(batch_size,)
 
             # actions_loss=F.cross_entropy(actions_scores,actions_in)
-            # actions_labels=torch.argmax(actions_scores,dim=1)  #ALL_N,
+            # actions_labels=torch.argmax(actions_scores,dim=1)  #A
             # actions_correct=torch.sum(torch.eq(actions_labels.int(),actions_in.int()).float())
             # actions_accuracy = actions_correct.item() / actions_scores.shape[0]
             # actions_meter.update(actions_accuracy, actions_scores.shape[0])
@@ -497,13 +505,12 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
 
         model.train()
         model.apply(set_bn_eval)
-
         # prepare batch data
         batch_data = [b.to(device=device) for b in batch_data]  # set batchdata to a list
-        # b: image tensor (16, 1, 3, 480, 720)； bboxes tensor, ...
+        # b: image tensor (16, 3, 480, 720)； bboxes tensor, ...
 
         batch_size = batch_data[0].shape[0]
-        num_frames = batch_data[0].shape[1]
+        num_frames = 1  # re-organize batches
 
         # forward
         # actions_scores,activities_scores=model((batch_data[0],batch_data[1],batch_data[4]))
@@ -538,7 +545,6 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         # actions_meter.update(actions_accuracy, actions_scores.shape[0])
 
         # Predict activities
-        print(activities_scores, activities_in)
 
         activities_loss = F.cross_entropy(activities_scores, activities_in)
         activities_labels = torch.argmax(activities_scores, dim=1)  # B*T,
@@ -587,7 +593,7 @@ def test_new_new_collective(data_loader, model, device, epoch, cfg):
             # prepare batch data
             batch_data = [b.to(device=device) for b in batch_data]
             batch_size = batch_data[0].shape[0]
-            num_frames = batch_data[0].shape[1]
+            num_frames = 1
 
             actions_in = batch_data[2].reshape((batch_size, num_frames, cfg.num_boxes))
             activities_in = batch_data[3].reshape((batch_size, num_frames))

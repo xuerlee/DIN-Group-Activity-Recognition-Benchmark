@@ -347,7 +347,7 @@ class Basenet_new_new_collective(nn.Module):
 
         # read config parameters
         B = images_in.shape[0]  # batch_size
-        T = images_in.shape[1]  # num_frames but now its the groups number
+        T = 1  # num_frames but now its the groups number
         H, W = self.cfg.image_size
         OH, OW = self.cfg.out_size
         MAX_N = self.cfg.num_boxes
