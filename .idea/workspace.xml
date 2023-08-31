@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="reorganize batch of images">
-      <change afterPath="$PROJECT_DIR$/show.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="load model" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -240,7 +237,7 @@
       <workItem from="1693160606721" duration="8672000" />
       <workItem from="1693236032618" duration="18257000" />
       <workItem from="1693321950199" duration="28117000" />
-      <workItem from="1693430400187" duration="11511000" />
+      <workItem from="1693430400187" duration="11822000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -354,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693463127908</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="load model">
+      <created>1693463858649</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1693463858649</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -406,7 +410,8 @@
     <MESSAGE value="train stage 1 for new_new_cad" />
     <MESSAGE value="train stage 2 for new_new_cad" />
     <MESSAGE value="reorganize batch of images" />
-    <option name="LAST_COMMIT_MESSAGE" value="reorganize batch of images" />
+    <MESSAGE value="load model" />
+    <option name="LAST_COMMIT_MESSAGE" value="load model" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

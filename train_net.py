@@ -78,7 +78,10 @@ def train_net(cfg):
         Basenet=basenet_list[cfg.dataset_name]
         model=Basenet(cfg)
         if cfg.if_continue:
+            start_epoch = cfg.start_epoch
             model.loadmodel(cfg.load_path_continue)
+        else:
+            start_epoch = 0
     elif cfg.training_stage==2:
         GCNnet=gcnnet_list[cfg.dataset_name]
         model=GCNnet(cfg)
@@ -109,7 +112,7 @@ def train_net(cfg):
 
     # Training iteration
     best_result={'epoch':0, 'activities_acc':0}
-    start_epoch=1
+
 
     time_str = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
     exp_name = '[%s_stage%d]<%s>' % (cfg.exp_note, cfg.training_stage, time_str)

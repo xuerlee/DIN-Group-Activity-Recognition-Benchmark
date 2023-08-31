@@ -87,7 +87,8 @@ class Config(object):
 
         self.if_continue = False
         self.load_path_continue = '/home/travail/jiaqi/code/DIN-Group-Activity-Recognition-Benchmark/result/[New_new_collective_stage1_stage1]<2023-08-31_01-53-28>/stage1_epoch4_7.71%.pth'
-        
+        self.start_epoch = 5
+
         # Exp
         self.training_stage=1  #specify stage1 or stage2
         self.stage1_model_path=''  #path of the base model, need to be set in stage2
