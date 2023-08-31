@@ -83,7 +83,10 @@ class Config(object):
         self.weight_decay = 0  #l2 weight decay
     
         self.max_epoch = 30  #max training epoch
-        self.test_interval_epoch = 1
+        self.test_interval_epoch = 10
+
+        self.if_continue = False
+        self.load_path_continue = '/home/travail/jiaqi/code/DIN-Group-Activity-Recognition-Benchmark/result/[New_new_collective_stage1_stage1]<2023-08-31_01-53-28>/stage1_epoch4_7.71%.pth'
         
         # Exp
         self.training_stage=1  #specify stage1 or stage2

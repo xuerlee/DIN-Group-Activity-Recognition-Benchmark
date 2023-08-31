@@ -77,7 +77,8 @@ def train_net(cfg):
     if cfg.training_stage==1:
         Basenet=basenet_list[cfg.dataset_name]
         model=Basenet(cfg)
-        # model.loadmodel('/home/travail/jiaqi/code/DIN-Group-Activity-Recognition-Benchmark/result/[New_new_collective_stage1_stage1]<2023-08-31_01-53-28>/stage1_epoch3_7.51%.pth')
+        if cfg.if_continue:
+            model.loadmodel(cfg.load_path_continue)
     elif cfg.training_stage==2:
         GCNnet=gcnnet_list[cfg.dataset_name]
         model=GCNnet(cfg)
