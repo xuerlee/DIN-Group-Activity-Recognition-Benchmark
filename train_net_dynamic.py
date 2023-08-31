@@ -557,7 +557,7 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         total_loss = activities_loss  # + cfg.actions_loss_weight*actions_loss
         loss_meter.update(total_loss.item(), batch_size)
 
-        writer.add_scalar('Training loss', total_loss, i)
+        writer.add_scalar('Training loss', total_loss, i * epoch)
 
 
         # Optim
