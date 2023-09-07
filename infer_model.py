@@ -1238,7 +1238,6 @@ class Dynamic_new_new_collective(nn.Module):
         NFB = self.cfg.num_features_boxes
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
         # Reshape the input data
-        print(images_in.shape[0])
         images_in_flat = torch.reshape(images_in, (B * T, 3, H, W))  # B*T, 3, H, W
         boxes_in = boxes_in.reshape(B * T, MAX_N, 4)
 
@@ -1266,6 +1265,8 @@ class Dynamic_new_new_collective(nn.Module):
         # RoI Align
         boxes_in_flat.requires_grad = False
         boxes_idx_flat.requires_grad = False
+        expanded_boxes_idx.requires_grad = False
+        boxes_in_flat_idx.requires_grad = False
         # boxes_features_all = self.roi_align(features_multiscale,
         #                                     boxes_in_flat,
         #                                     boxes_idx_flat)  # B*T*MAX_N, D, K, K,
@@ -1455,12 +1456,20 @@ class Dynamic_collective(nn.Module):
         boxes_idx = torch.stack(boxes_idx).to(device=boxes_in.device)  # B*T, MAX_N
         boxes_idx_flat = torch.reshape(boxes_idx, (B * T * MAX_N,))  # B*T*MAX_N,
 
+        expanded_boxes_idx = boxes_idx_flat.unsqueeze(1)
+        boxes_in_flat_idx = torch.cat((expanded_boxes_idx, boxes_in_flat), dim=1)
+
         # RoI Align
         boxes_in_flat.requires_grad = False
         boxes_idx_flat.requires_grad = False
+        expanded_boxes_idx.requires_grad = False
+        boxes_in_flat_idx.requires_grad = False
+        # boxes_features_all = self.roi_align(features_multiscale,
+        #                                     boxes_in_flat,
+        #                                     boxes_idx_flat)  # B*T*MAX_N, D, K, K,
         boxes_features_all = self.roi_align(features_multiscale,
-                                            boxes_in_flat,
-                                            boxes_idx_flat)  # B*T*MAX_N, D, K, K,
+                                            boxes_in_flat_idx)
+
         boxes_features_all = boxes_features_all.reshape(B, T, MAX_N, -1)  # B*T,MAX_N, D*K*K
 
         # Embedding
@@ -1514,5 +1523,6 @@ class Dynamic_collective(nn.Module):
         # actions_scores = torch.cat(actions_scores, dim=0)  # ALL_N,actn_num
         activities_scores = torch.cat(activities_scores, dim=0)  # B,acty_num
 
-        return {'activities':activities_scores}# activities_scores # actions_scores,
+        # return {'activities':activities_scores}# activities_scores # actions_scores,
+        return activities_scores # activities_scores # actions_scores,
 

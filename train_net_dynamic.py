@@ -331,14 +331,14 @@ def test_volleyball(data_loader, model, device, epoch, cfg):
     return test_info
 
 
-def train_collective(data_loader, model, device, optimizer, epoch, cfg):
+def train_collective(data_loader, model, device, optimizer, epoch, cfg, writer):
     
     actions_meter=AverageMeter()
     activities_meter=AverageMeter()
     loss_meter=AverageMeter()
     epoch_timer=Timer()
     activities_conf = ConfusionMeter(cfg.num_activities)
-    for batch_data in data_loader:
+    for i, batch_data in enumerate(data_loader):
         model.train()
         model.apply(set_bn_eval)
     
@@ -390,6 +390,9 @@ def train_collective(data_loader, model, device, optimizer, epoch, cfg):
         # Total loss
         total_loss = activities_loss # + cfg.actions_loss_weight*actions_loss
         loss_meter.update(total_loss.item(), batch_size)
+
+        writer.add_scalar('Training loss', total_loss, i * epoch)
+        writer.add_scalar('Activities loss', activities_loss, i * epoch)
 
         # Optim
         optimizer.zero_grad()

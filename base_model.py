@@ -165,7 +165,7 @@ class Basenet_collective(nn.Module):
             for p in self.backbone.parameters():
                 p.requires_grad=False
         
-        self.roi_align=RoIAlign(*self.cfg.crop_size)
+        self.roi_align = RoIAlign(*self.cfg.crop_size, sampling_ratio=-1)
         
         self.fc_emb_1=nn.Linear(K*K*D,NFB)
         self.dropout_emb_1 = nn.Dropout(p=self.cfg.train_dropout_prob)
@@ -240,13 +240,19 @@ class Basenet_collective(nn.Module):
         boxes_idx=torch.stack(boxes_idx).to(device=boxes_in.device)  # B*T, MAX_N
         boxes_idx_flat=torch.reshape(boxes_idx,(B*T*MAX_N,))  #B*T*MAX_N,
 
+        expanded_boxes_idx = boxes_idx_flat.unsqueeze(1)
+        boxes_in_flat_idx = torch.cat((expanded_boxes_idx, boxes_in_flat), dim=1)
+
         # RoI Align
         boxes_in_flat.requires_grad=False
         boxes_idx_flat.requires_grad=False
-        boxes_features_all=self.roi_align(features_multiscale,
-                                            boxes_in_flat,
-                                            boxes_idx_flat)  #B*T*MAX_N, D, K, K,
-        
+        expanded_boxes_idx.requires_grad = False
+        boxes_in_flat_idx.requires_grad = False
+        # boxes_features_all=self.roi_align(features_multiscale,
+        #                                     boxes_in_flat,
+        #                                     boxes_idx_flat)  #B*T*MAX_N, D, K, K,
+        boxes_features_all = self.roi_align(features_multiscale,
+                                            boxes_in_flat_idx)
         boxes_features_all=boxes_features_all.reshape(B*T,MAX_N,-1)  #B*T,MAX_N, D*K*K
         
         # Embedding 
