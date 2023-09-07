@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="modify tensorboard">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gcn_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/gcn_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/train_collective_stage1.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_collective_stage1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/train_collective_stage2_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_collective_stage2_dynamic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_net_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_net_dynamic.py" afterDir="false" />
-    </list>
+    <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="train original CAD" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -275,7 +265,7 @@
       <workItem from="1693501308843" duration="1841000" />
       <workItem from="1693878903945" duration="1368000" />
       <workItem from="1694012888634" duration="3350000" />
-      <workItem from="1694047402119" duration="2400000" />
+      <workItem from="1694047402119" duration="2800000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -410,7 +400,28 @@
       <option name="project" value="LOCAL" />
       <updated>1693488821960</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="train original CAD">
+      <created>1694065494922</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1694065494922</updated>
+    </task>
+    <task id="LOCAL-00021" summary="train original CAD">
+      <created>1694065547625</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1694065547625</updated>
+    </task>
+    <task id="LOCAL-00022" summary="train original CAD">
+      <created>1694065640949</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1694065640949</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -464,7 +475,8 @@
     <MESSAGE value="reorganize batch of images" />
     <MESSAGE value="load model" />
     <MESSAGE value="modify tensorboard" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify tensorboard" />
+    <MESSAGE value="train original CAD" />
+    <option name="LAST_COMMIT_MESSAGE" value="train original CAD" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -478,7 +490,7 @@
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1693258228374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$just_test.coverage" NAME="just_test Coverage Results" MODIFIED="1689379158718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693464132259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_collective_stage1.coverage" NAME="train_collective_stage1 Coverage Results" MODIFIED="1694018245786" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_collective_stage1.coverage" NAME="train_collective_stage1 Coverage Results" MODIFIED="1694065584221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/infer_module/higcin_infer_module.py">
