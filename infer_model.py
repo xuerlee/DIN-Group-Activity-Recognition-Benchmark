@@ -1493,7 +1493,8 @@ class Dynamic_collective(nn.Module):
         activities_scores = []
         bboxes_num_in = bboxes_num_in.reshape(B, T)  # B,T,
         for b in range(B):
-            N = bboxes_num_in[b][0]
+            # N = bboxes_num_in[b][0]
+            N = MAX_N
             boxes_features = boxes_features_all[b, :, :N, :].reshape(1, T, N, -1)  # 1,T,N,NFB
             # boxes_positions = boxes_in[b, :, :N, :].reshape(T * N, 4)  # T*N, 4
 
