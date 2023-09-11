@@ -158,8 +158,8 @@ class Basenet_collective(nn.Module):
         NFB=self.cfg.num_features_boxes
         NFR, NFG=self.cfg.num_features_relation, self.cfg.num_features_gcn
         
-        self.backbone=MyInception_v3(transform_input=False,pretrained=True)
-#         self.backbone=MyVGG16(pretrained=True)
+#        self.backbone=MyInception_v3(transform_input=False,pretrained=True)
+        self.backbone=MyVGG16(pretrained=True)
         
         if not self.cfg.train_backbone:
             for p in self.backbone.parameters():
