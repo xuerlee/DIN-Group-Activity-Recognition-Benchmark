@@ -158,14 +158,24 @@ class Basenet_collective(nn.Module):
         NFB=self.cfg.num_features_boxes
         NFR, NFG=self.cfg.num_features_relation, self.cfg.num_features_gcn
         
-#        self.backbone=MyInception_v3(transform_input=False,pretrained=True)
-        self.backbone=MyVGG16(pretrained=True)
-        
+
+        if cfg.backbone=='inv3':
+            self.backbone=MyInception_v3(transform_input=False,pretrained=True)
+        elif cfg.backbone=='vgg16':
+            self.backbone=MyVGG16(pretrained=True)
+        elif cfg.backbone=='vgg19':
+            self.backbone=MyVGG19(pretrained=True)
+        elif cfg.backbone == 'res18':
+            self.backbone = MyRes18(pretrained = True)
+        else:
+            assert False
+
         if not self.cfg.train_backbone:
             for p in self.backbone.parameters():
                 p.requires_grad=False
         
         self.roi_align = RoIAlign(*self.cfg.crop_size, sampling_ratio=-1)
+
         
         self.fc_emb_1=nn.Linear(K*K*D,NFB)
         self.dropout_emb_1 = nn.Dropout(p=self.cfg.train_dropout_prob)
@@ -203,7 +213,8 @@ class Basenet_collective(nn.Module):
     
         # read config parameters
         B=images_in.shape[0]
-        T=images_in.shape[1]
+        T=images_in.shape[1]  # =1 during the first stage
+
         H, W=self.cfg.image_size
         OH, OW=self.cfg.out_size
         MAX_N=self.cfg.num_boxes
@@ -217,12 +228,11 @@ class Basenet_collective(nn.Module):
         # Reshape the input data
         images_in_flat=torch.reshape(images_in,(B*T,3,H,W))  #B*T, 3, H, W
         boxes_in=boxes_in.reshape(B*T,MAX_N,4)
-                
+
         # Use backbone to extract features of images_in
         # Pre-precess first
         images_in_flat=prep_images(images_in_flat)
         outputs=self.backbone(images_in_flat)
-            
         
         # Build multiscale features
         features_multiscale=[]
@@ -230,9 +240,9 @@ class Basenet_collective(nn.Module):
             if features.shape[2:4]!=torch.Size([OH,OW]):
                 features=F.interpolate(features,size=(OH,OW),mode='bilinear',align_corners=True)
             features_multiscale.append(features)
-        
+
         features_multiscale=torch.cat(features_multiscale,dim=1)  #B*T, D, OH, OW
-        
+
 
         boxes_in_flat=torch.reshape(boxes_in,(B*T*MAX_N,4))  #B*T*MAX_N, 4
             
@@ -253,8 +263,8 @@ class Basenet_collective(nn.Module):
         #                                     boxes_idx_flat)  #B*T*MAX_N, D, K, K,
         boxes_features_all = self.roi_align(features_multiscale,
                                             boxes_in_flat_idx)
-        boxes_features_all=boxes_features_all.reshape(B*T,MAX_N,-1)  #B*T,MAX_N, D*K*K
-        
+        boxes_features_all=boxes_features_all.reshape(B*T, MAX_N,-1)  #B*T,MAX_N, D*K*K
+
         # Embedding 
         boxes_features_all=self.fc_emb_1(boxes_features_all)  # B*T,MAX_N, NFB
         boxes_features_all=F.relu(boxes_features_all)
