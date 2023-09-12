@@ -39,6 +39,5 @@ cfg.weight_decay=1e-2
 cfg.lr_plan={}
 cfg.max_epoch=100
 
-
 cfg.exp_note='Collective_stage1'
 train_net(cfg)
