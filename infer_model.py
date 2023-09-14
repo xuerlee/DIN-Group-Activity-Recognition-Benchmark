@@ -1138,6 +1138,7 @@ class Dynamic_new_new_collective(nn.Module):
         super(Dynamic_new_new_collective, self).__init__()
         self.cfg = cfg
         T, N = cfg.num_frames, cfg.num_boxes
+        self.T = T
         D = self.cfg.emb_features
         K = self.cfg.crop_size[0]
         NFB = self.cfg.num_features_boxes
@@ -1228,9 +1229,12 @@ class Dynamic_new_new_collective(nn.Module):
         images_in, boxes_in, bboxes_num_in = batch_data
 
         # read config parameters
+
+
+
         B = images_in.shape[0]
-        # T = images_in.shape[1]
-        T = 1
+        T = images_in.shape[1]
+        # T = 1
 
         H, W = self.cfg.image_size
         OH, OW = self.cfg.out_size

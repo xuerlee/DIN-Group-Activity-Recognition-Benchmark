@@ -513,7 +513,8 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         # b: image tensor (16, 3, 480, 720)； bboxes tensor, ...
 
         batch_size = batch_data[0].shape[0]
-        num_frames = 1  # re-organize batches
+        # num_frames = 1  # re-organize batches
+        num_frames = batch_data[0].shape[1]
 
         # forward
         # actions_scores,activities_scores=model((batch_data[0],batch_data[1],batch_data[4]))

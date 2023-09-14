@@ -5,7 +5,7 @@ import skimage.transform
 import torch
 import torchvision.transforms as transforms
 from torch.utils import data
-from utils import out_group_black, re_organize_seq
+from utils import out_group_black
 import torchvision.models as models
 
 from PIL import Image, ImageDraw, ImageFont
@@ -579,22 +579,14 @@ class NewNewCollectiveDataset(data.Dataset):
         B_actions = []
         B_bboxes_num = []
         for i, item in enumerate(batch):
-            images, bboxes, actions, activities, bboxes_num, _ = item  # sequence 1
-            images = re_organize_seq(images, self.num_frames)
-            bboxes = re_organize_seq(bboxes, self.num_frames)
-            actions = re_organize_seq(actions, self.num_frames)
-            activities = re_organize_seq(activities, self.num_frames)
-            bboxes_num = re_organize_seq(bboxes_num, self.num_frames)
+            images, bboxes, actions, activities, bboxes_num, _ = item
             for j, image in enumerate(images):
                 B_images.append(image)
                 B_bboxes.append(bboxes[j])
                 B_activities.append(activities[j])
                 B_actions.append(actions[j])
                 B_bboxes_num.append(bboxes_num[j])
-            # B_images.append(images)
-            # B_bboxes.append(bboxes)
-            # B_actions.append(actions)
-            # B_activities.append(activities)
+        print(len(B_images))
 
         B_images = np.stack(B_images)
         B_images = torch.from_numpy(B_images).float()
@@ -609,7 +601,6 @@ class NewNewCollectiveDataset(data.Dataset):
         B_actions = torch.from_numpy(B_actions).long()
         B_activities = torch.from_numpy(B_activities).long()
         B_bboxes_num = torch.from_numpy(B_bboxes_num).int()
-
 
         return B_images, B_bboxes, B_actions, B_activities, B_bboxes_num
 

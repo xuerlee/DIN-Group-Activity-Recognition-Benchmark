@@ -33,6 +33,12 @@ def out_group_black(group_box, image):
 
     return image_copy
 
+def re_organize_seq(seq, num_frames):
+    group_num = int(len(seq)//num_frames)
+    seq = [[seq[i + j * group_num] for j in range(num_frames)] for i in range(group_num)]
+
+    return seq
+
 # def prep_images(images):
 #     """
 #     preprocess images
