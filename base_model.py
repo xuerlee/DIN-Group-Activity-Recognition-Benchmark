@@ -319,8 +319,16 @@ class Basenet_new_new_collective(nn.Module):
 
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
 
-        self.backbone = MyInception_v3(transform_input=False, pretrained=True)
-        #         self.backbone=MyVGG16(pretrained=True)
+        if cfg.backbone=='inv3':
+            self.backbone=MyInception_v3(transform_input=False,pretrained=True)
+        elif cfg.backbone=='vgg16':
+            self.backbone=MyVGG16(pretrained=True)
+        elif cfg.backbone=='vgg19':
+            self.backbone=MyVGG19(pretrained=True)
+        elif cfg.backbone == 'res18':
+            self.backbone = MyRes18(pretrained = True)
+        else:
+            assert False
 
         if not self.cfg.train_backbone:
             for p in self.backbone.parameters():

@@ -11,8 +11,22 @@ cfg.device_list="0,1"
 cfg.training_stage=1
 cfg.train_backbone=True
 
-cfg.image_size=480, 720
-cfg.out_size=57,87
+# ResNet18
+cfg.backbone = 'res18'
+cfg.image_size = 480, 720
+cfg.out_size = 15, 23
+cfg.emb_features = 512
+
+# VGG16
+# cfg.backbone = 'vgg16'
+# cfg.image_size = 480, 720
+# cfg.out_size = 15, 22
+# cfg.emb_features = 512
+# cfg.stage1_model_path = 'result/basemodel_CAD_vgg16.pth'
+
+
+#cfg.image_size=480, 720
+#cfg.out_size=57,87
 cfg.num_boxes=13
 cfg.num_actions=6
 cfg.num_activities=5

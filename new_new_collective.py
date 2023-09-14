@@ -8,7 +8,7 @@ from torch.utils import data
 from utils import out_group_black
 import torchvision.models as models
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import matplotlib.pyplot as plt
 import random
 import xml.etree.ElementTree as ET
@@ -62,7 +62,7 @@ def new_new_collective_read_annotations(path, sid):
                         xbr = float(box.get('xbr'))
                         ybr = float(box.get('ybr'))
                         H, W = FRAMES_SIZE[sid]
-                        bboxes = [ytl / H, xtl / W, xbr / H, ybr / W]
+                        bboxes = [ytl / H, xtl / W, ybr / H, xbr / W]
 
                         group_id = box.find('attribute[@name="group_id"]').text
                         group_activity = box.find('attribute[@name="group_activity"]').text
@@ -84,7 +84,7 @@ def new_new_collective_read_annotations(path, sid):
                         w = xbr - xtl
                         h = ybr - ytl
                         H, W = FRAMES_SIZE[sid]
-                        bboxes = [ytl / H, xtl / W, xbr / H, ybr / W]
+                        bboxes = [ytl / H, xtl / W, ybr / H, xbr / W]
                         group_id = box.find('attribute[@name="group_id"]').text
                         person_id = box.find('attribute[@name="person_id"]').text
                         individual_activity = box.find('attribute[@name="individual_activity"]').text
@@ -444,8 +444,7 @@ class NewNewCollectiveDataset(data.Dataset):
                     # gw1, gh1, gw2, gh2 = gx1 * OW, gy1 * OH, gx2 * OW, gy2 * OH
                     gw1, gh1, gw2, gh2 = gx1 * img.shape[2], gy1 * img.shape[1], gx2 * img.shape[2], gy2 * img.shape[1]
                     # print('xyxy', gx1 * img.shape[2], gy1 * img.shape[1], gx2 * img.shape[2], gy2 * img.shape[1])
-
-                    if (gw1 > gw2 or gh1 > gh2) and len(self.anns[sid][src_fid]['groups']) == 1:
+                    if (gw1 > gw2 or gh1 > gh2 or (gw2-gw1)*(gh2-gh2)<10) and len(self.anns[sid][src_fid]['groups']) == 1:
                         activities.append(4)
                         images.append(img)
                         temp_boxes = []
@@ -456,6 +455,8 @@ class NewNewCollectiveDataset(data.Dataset):
                                 person_box = person['bboxes']
                                 py1, px1, py2, px2 = person_box
                                 pw1, ph1, pw2, ph2 = px1 * OW, py1 * OH, px2 * OW, py2 * OH
+                                dw1, dh1, dw2, dh2 = px1 * img.shape[2], py1 * img.shape[1], px2 * img.shape[2], py2 * \
+                                                     img.shape[1]
                                 action = IDIVIDUAL_ACTIVITIES_ID[person['individual_activity']]
                                 temp_boxes.append([pw1, ph1, pw2, ph2])
                                 temp_actions.append(action)
@@ -468,9 +469,9 @@ class NewNewCollectiveDataset(data.Dataset):
                         actions.append(temp_actions)
                     else:
                         img_paint_black = out_group_black([gw1, gh1, gw2, gh2], img)
-                        # plt.imshow(img_paint_black.transpose(1, 2, 0))
-                        # plt.show()
                         images.append(img_paint_black)
+                        imagetodraw = Image.fromarray(img_paint_black.transpose(1, 2, 0))
+                        draw = ImageDraw.Draw(imagetodraw)
                         activities.append(GROUP_ACTIVITIES_ID[group['group_activity']])
                         temp_boxes = []
                         temp_actions = []
@@ -480,9 +481,15 @@ class NewNewCollectiveDataset(data.Dataset):
                                 person_box = person['bboxes']
                                 py1, px1, py2, px2 = person_box
                                 pw1, ph1, pw2, ph2 = px1 * OW, py1 * OH, px2 * OW, py2 * OH
+                                dw1, dh1, dw2, dh2 = px1 * img.shape[2], py1 * img.shape[1], px2 * img.shape[2], py2 * \
+                                                     img.shape[1]
                                 action = IDIVIDUAL_ACTIVITIES_ID[person['individual_activity']]
                                 temp_boxes.append([pw1, ph1, pw2, ph2])
                                 temp_actions.append(action)
+                        #         draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
+                        # imagetodraw.show()
+                        # plt.imshow(img_paint_black.transpose(1, 2, 0))
+                        # plt.show()
                         real_bboxes_num.append(len(temp_boxes))
                         while len(temp_boxes) != self.num_boxes:
                             temp_boxes.append([-2, -2, -2, -2])
@@ -491,20 +498,27 @@ class NewNewCollectiveDataset(data.Dataset):
                         bboxes.append(temp_boxes)
                         actions.append(temp_actions)
 
+
             else:
                 activities.append(4)
                 images.append(img)
                 temp_boxes = []
                 temp_actions = []
+                imagetodraw = Image.fromarray(img.transpose(1, 2, 0))
+                draw = ImageDraw.Draw(imagetodraw)
                 for person in self.anns[sid][src_fid]['persons']:
                     pg_id = person['group_id']
                     if int(pg_id) == 0:
                         person_box = person['bboxes']
                         py1, px1, py2, px2 = person_box
                         pw1, ph1, pw2, ph2 = px1 * OW, py1 * OH, px2 * OW, py2 * OH
+                        dw1, dh1, dw2, dh2 = px1 * img.shape[2], py1 * img.shape[1], px2 * img.shape[2], py2 * \
+                                             img.shape[1]
                         action = IDIVIDUAL_ACTIVITIES_ID[person['individual_activity']]
                         temp_boxes.append([pw1, ph1, pw2, ph2])
                         temp_actions.append(action)
+                #         draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
+                # imagetodraw.show()
                 real_bboxes_num.append(len(temp_boxes))
                 while len(temp_boxes) != self.num_boxes:
                     temp_boxes.append([-2, -2, -2, -2])

@@ -25,12 +25,13 @@ def out_group_black(group_box, image):
         :param: image
         :return: blacked image
     """
-    image[..., :int(group_box[1]), :] = 0
-    image[..., int(group_box[3]):, :] = 0
-    image[..., int(group_box[1]):int(group_box[3]), :int(group_box[0])] = 0
-    image[..., int(group_box[1]):int(group_box[3]), int(group_box[2]):] = 0
+    image_copy = image.copy()
+    image_copy[..., :int(group_box[1]), :] = 0
+    image_copy[..., int(group_box[3]):, :] = 0
+    image_copy[..., int(group_box[1]):int(group_box[3]), :int(group_box[0])] = 0
+    image_copy[..., int(group_box[1]):int(group_box[3]), int(group_box[2]):] = 0
 
-    return image
+    return image_copy
 
 # def prep_images(images):
 #     """

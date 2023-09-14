@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="4772b6e0-4f38-4795-8345-9cc41c312414" name="Default Changelist" comment="train original CAD">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infer_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/infer_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_new_collective.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_new_collective.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/train_collective_stage1.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_collective_stage1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/train_collective_stage2_dynamic.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_collective_stage2_dynamic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/train_new_new_collective_stage1.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/train_new_new_collective_stage1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +105,7 @@
       <recent name="$PROJECT_DIR$/scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train_collective_stage2_dynamic">
+  <component name="RunManager" selected="Python.train_new_new_collective_stage1">
     <configuration name="train_collective_stage1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DIN_GAR" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -214,9 +218,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train_new_new_collective_stage1" />
         <item itemvalue="Python.train_collective_stage2_dynamic" />
         <item itemvalue="Python.train_collective_stage1" />
-        <item itemvalue="Python.train_new_new_collective_stage1" />
         <item itemvalue="Python.train_new_new_collective_stage2_dynamic" />
         <item itemvalue="Python.train_net" />
       </list>
@@ -270,7 +274,11 @@
       <workItem from="1693878903945" duration="1368000" />
       <workItem from="1694012888634" duration="3350000" />
       <workItem from="1694047402119" duration="3035000" />
-      <workItem from="1694098582071" duration="6623000" />
+      <workItem from="1694098582071" duration="7233000" />
+      <workItem from="1694534812549" duration="5019000" />
+      <workItem from="1694615872358" duration="1213000" />
+      <workItem from="1694646305635" duration="2184000" />
+      <workItem from="1694660389652" duration="9843000" />
     </task>
     <task id="LOCAL-00001" summary="add newest CAD dataset">
       <created>1688274816673</created>
@@ -433,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1694065987958</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="train original CAD">
+      <created>1694115851380</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1694115851380</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -502,8 +517,8 @@
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_net.coverage" NAME="train_net Coverage Results" MODIFIED="1693258228374" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$just_test.coverage" NAME="just_test Coverage Results" MODIFIED="1689379158718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_collective_stage2_dynamic.coverage" NAME="train_collective_stage2_dynamic Coverage Results" MODIFIED="1694115810605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
-    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1693464132259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
     <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_collective_stage1.coverage" NAME="train_collective_stage1 Coverage Results" MODIFIED="1694065584221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/DIN_Group_Activity_Recognition_Benchmark$train_new_new_collective_stage1.coverage" NAME="train_new_new_collective_stage1 Coverage Results" MODIFIED="1694670384949" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/infer_module/higcin_infer_module.py">
