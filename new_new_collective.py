@@ -489,8 +489,8 @@ class NewNewCollectiveDataset(data.Dataset):
                                 action = IDIVIDUAL_ACTIVITIES_ID[person['individual_activity']]
                                 temp_boxes.append([pw1, ph1, pw2, ph2])
                                 temp_actions.append(action)
-                                draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
-                        imagetodraw.show()
+                        #         draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
+                        # imagetodraw.show()
                         # plt.imshow(img_paint_black.transpose(1, 2, 0))
                         # plt.show()
                         real_bboxes_num.append(len(temp_boxes))
@@ -519,8 +519,8 @@ class NewNewCollectiveDataset(data.Dataset):
                         action = IDIVIDUAL_ACTIVITIES_ID[person['individual_activity']]
                         temp_boxes.append([pw1, ph1, pw2, ph2])
                         temp_actions.append(action)
-                        draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
-                imagetodraw.show()
+                #         draw.rectangle([dw1, dh1, dw2, dh2], outline="red", width=4)
+                # imagetodraw.show()
                 real_bboxes_num.append(len(temp_boxes))
                 while len(temp_boxes) != self.num_boxes:
                     temp_boxes.append([-2, -2, -2, -2])
