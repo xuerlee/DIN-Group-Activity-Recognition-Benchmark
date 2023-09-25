@@ -501,7 +501,6 @@ class NewNewCollectiveDataset(data.Dataset):
                         bboxes.append(temp_boxes)
                         actions.append(temp_actions)
 
-
             else:
                 activities.append(4)
                 images.append(img)
@@ -578,13 +577,22 @@ class NewNewCollectiveDataset(data.Dataset):
         B_activities = []
         B_actions = []
         B_bboxes_num = []
+        if self.is_finetune:
+            if self.is_training:
+                num_frames = 1
+            else:
+                num_frames = self.num_frames
+        else:
+            num_frames = self.num_frames
+
         for i, item in enumerate(batch):
             images, bboxes, actions, activities, bboxes_num, _ = item  # sequence 1
-            images = re_organize_seq(images, self.num_frames)
-            bboxes = re_organize_seq(bboxes, self.num_frames)
-            actions = re_organize_seq(actions, self.num_frames)
-            activities = re_organize_seq(activities, self.num_frames)
-            bboxes_num = re_organize_seq(bboxes_num, self.num_frames)
+            images = re_organize_seq(images, num_frames)
+            bboxes = re_organize_seq(bboxes, num_frames)
+            actions = re_organize_seq(actions, num_frames)
+            activities = re_organize_seq(activities, num_frames)
+            bboxes_num = re_organize_seq(bboxes_num, num_frames)
+
             for j, image in enumerate(images):
                 B_images.append(image)
                 B_bboxes.append(bboxes[j])
