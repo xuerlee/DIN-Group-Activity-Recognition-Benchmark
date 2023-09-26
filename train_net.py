@@ -453,7 +453,8 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         # b: image tensor (16, 1, 3, 480, 720)； bboxes tensor, ...
 
         batch_size = batch_data[0].shape[0]
-        num_frames = 1
+        num_frames = batch_data[0].shape[1]
+        # num_frames = 1
 
         # forward
         actions_scores, activities_scores = model((batch_data[0], batch_data[1], batch_data[-1]))  # Tensors: stacked images, stacked bboxes, stacked nums
@@ -535,7 +536,8 @@ def test_new_new_collective(data_loader, model, device, epoch, cfg):
             # prepare batch data
             batch_data = [b.to(device=device) for b in batch_data]
             batch_size = batch_data[0].shape[0]
-            num_frames = 1
+            num_frames = batch_data[0].shape[1]
+            # num_frames = 1
 
             actions_in = batch_data[2].reshape((batch_size, num_frames, cfg.num_boxes))
             activities_in = batch_data[3].reshape((batch_size, num_frames))
