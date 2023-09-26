@@ -589,7 +589,6 @@ class NewNewCollectiveDataset(data.Dataset):
         for i, item in enumerate(batch):
             images, bboxes, actions, activities, bboxes_num, _ = item  # sequence 1
             images = re_organize_seq(images, num_frames)
-            print(images.size())
             bboxes = re_organize_seq(bboxes, num_frames)
             actions = re_organize_seq(actions, num_frames)
             activities = re_organize_seq(activities, num_frames)
@@ -601,7 +600,6 @@ class NewNewCollectiveDataset(data.Dataset):
             B_bboxes_num.append(bboxes_num)
 
         B_images = torch.cat(B_images)
-        print(B_images.size())
         B_bboxes = torch.cat(B_bboxes)
         B_activities = torch.cat(B_activities)
         B_actions = torch.cat(B_actions)
