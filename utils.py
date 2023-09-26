@@ -35,9 +35,12 @@ def out_group_black(group_box, image):
 
 def re_organize_seq(seq, num_frames):
     group_num = int(len(seq)//num_frames)
-    seq = [[seq[i + j * group_num] for j in range(num_frames)] for i in range(group_num)]
-
-    return seq
+    # seq = [[seq[i + j * group_num] for j in range(num_frames)] for i in range(group_num)]
+    seq_tensor = torch.tensor(seq)
+    shape = seq_tensor.shape
+    tmp = seq_tensor.reshape(num_frames, -1, *shape[1:])
+    result = tmp.permute(1, 0, *range(2, tmp.dim()))
+    return result
 
 # def prep_images(images):
 #     """

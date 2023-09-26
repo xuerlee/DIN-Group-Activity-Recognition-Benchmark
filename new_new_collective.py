@@ -471,9 +471,10 @@ class NewNewCollectiveDataset(data.Dataset):
                         bboxes.append(temp_boxes)
                         actions.append(temp_actions)
                     else:
-                        img_paint_black = out_group_black([gw1, gh1, gw2, gh2], img)
-                        images.append(img_paint_black)
-                        imagetodraw = Image.fromarray(img_paint_black.transpose(1, 2, 0))
+                        # img_paint_black = out_group_black([gw1, gh1, gw2, gh2], img)
+                        # images.append(img_paint_black)
+                        images.append(img)
+                        imagetodraw = Image.fromarray(img.transpose(1, 2, 0))
                         draw = ImageDraw.Draw(imagetodraw)
                         activities.append(GROUP_ACTIVITIES_ID[group['group_activity']])
                         temp_boxes = []
@@ -588,35 +589,47 @@ class NewNewCollectiveDataset(data.Dataset):
         for i, item in enumerate(batch):
             images, bboxes, actions, activities, bboxes_num, _ = item  # sequence 1
             images = re_organize_seq(images, num_frames)
+            print(images.size())
             bboxes = re_organize_seq(bboxes, num_frames)
             actions = re_organize_seq(actions, num_frames)
             activities = re_organize_seq(activities, num_frames)
             bboxes_num = re_organize_seq(bboxes_num, num_frames)
+            B_images.append(images)
+            B_bboxes.append(bboxes)
+            B_activities.append(activities)
+            B_actions.append(actions)
+            B_bboxes_num.append(bboxes_num)
 
-            for j, image in enumerate(images):
-                B_images.append(image)
-                B_bboxes.append(bboxes[j])
-                B_activities.append(activities[j])
-                B_actions.append(actions[j])
-                B_bboxes_num.append(bboxes_num[j])
-            # B_images.append(images)
-            # B_bboxes.append(bboxes)
-            # B_actions.append(actions)
-            # B_activities.append(activities)
+        B_images = torch.cat(B_images)
+        print(B_images.size())
+        B_bboxes = torch.cat(B_bboxes)
+        B_activities = torch.cat(B_activities)
+        B_actions = torch.cat(B_actions)
+        B_bboxes_num = torch.cat(B_bboxes_num)
 
-        B_images = np.stack(B_images)
-        B_images = torch.from_numpy(B_images).float()
 
-        B_activities = np.array(B_activities, dtype=np.int32)
-        B_bboxes_num = np.array(B_bboxes_num, dtype=np.int32)
-        B_bboxes = np.array(B_bboxes, dtype=np.float64).reshape(-1, self.num_boxes, 4)  # the numbers of boxes are equal (including the group box)
-        B_actions = np.array(B_actions, dtype=np.int32).reshape(-1, self.num_boxes)
 
-        # convert to pytorch tensor
-        B_bboxes = torch.from_numpy(B_bboxes).float()
-        B_actions = torch.from_numpy(B_actions).long()
-        B_activities = torch.from_numpy(B_activities).long()
-        B_bboxes_num = torch.from_numpy(B_bboxes_num).int()
+
+            # for j, image in enumerate(images):
+            #     B_images.append(image)
+            #     B_bboxes.append(bboxes[j])
+            #     B_activities.append(activities[j])
+            #     B_actions.append(actions[j])
+            #     B_bboxes_num.append(bboxes_num[j])
+
+        # B_images = np.stack(B_images)
+        # B_images = torch.from_numpy(B_images).float()
+        #
+        # B_activities = np.array(B_activities, dtype=np.int32)
+        # B_bboxes_num = np.array(B_bboxes_num, dtype=np.int32)
+        # B_bboxes = np.array(B_bboxes, dtype=np.float64).reshape(-1, self.num_boxes, 4)  # the numbers of boxes are equal (including the group box)
+        # B_actions = np.array(B_actions, dtype=np.int32).reshape(-1, self.num_boxes)
+        #
+        # # convert to pytorch tensor
+        # B_bboxes = torch.from_numpy(B_bboxes).float()
+        # B_actions = torch.from_numpy(B_actions).long()
+        # B_activities = torch.from_numpy(B_activities).long()
+        # B_bboxes_num = torch.from_numpy(B_bboxes_num).int()
 
 
         return B_images, B_bboxes, B_actions, B_activities, B_bboxes_num
