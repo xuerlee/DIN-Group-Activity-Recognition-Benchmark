@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import random
 import xml.etree.ElementTree as ET
 import sys
+from config import *
 
 FRAMES_NUM = {1: 301, 2: 346, 3: 193, 4: 256, 10: 301, 12: 1083, 13: 850, 14: 722, 23: 310,
               26: 733, 28: 469, 29: 634, 30: 355, 31: 689, 33: 192, 36: 912, 41: 706, 42: 418,
@@ -37,6 +38,7 @@ Action6to5 = {0: 0, 1: 1, 2: 2, 3: 3, 4: 1, 5: 4}
 Activity5to4 = {0: 0, 1: 1, 2: 2, 3: 0, 4: 3}
 
 def new_new_collective_read_annotations(path, sid):
+
     annotations = {}
     path = path + '/annotations/seq_%02d.xml' % sid
 
@@ -153,6 +155,13 @@ class NewNewCollectiveDataset(data.Dataset):
         # self.frames_seq = np.empty((1337, 2), dtype = np.int)
         # self.flag = 0
 
+        # Set data position
+        cfg = Config('new_new_collective')
+        os.environ['CUDA_VISIBLE_DEVICES'] = cfg.device_list
+        if cfg.use_gpu and torch.cuda.is_available():
+            self.device = torch.device('cuda')
+        else:
+            self.device = torch.device('cpu')
     def __len__(self):
         """
         Return the total number of samples
@@ -588,6 +597,17 @@ class NewNewCollectiveDataset(data.Dataset):
 
         for i, item in enumerate(batch):
             images, bboxes, actions, activities, bboxes_num, _ = item  # sequence 1
+            images = np.array(images)
+            bboxes = np.array(bboxes, dtype=np.float64)
+            actions = np.array(actions, dtype=np.int32)
+            activities = np.array(activities, dtype=np.int32)
+            bboxes_num = np.array(bboxes_num, dtype=np.int32)
+            images = torch.from_numpy(images).float().to(self.device)
+            bboxes = torch.from_numpy(bboxes).float().to(self.device)
+            actions = torch.from_numpy(actions).long().to(self.device)
+            activities = torch.from_numpy(activities).long().to(self.device)
+            bboxes_num = torch.from_numpy(bboxes_num).int().to(self.device)
+
             images = re_organize_seq(images, num_frames)
             bboxes = re_organize_seq(bboxes, num_frames)
             actions = re_organize_seq(actions, num_frames)
