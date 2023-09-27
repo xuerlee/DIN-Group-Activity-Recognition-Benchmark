@@ -480,9 +480,9 @@ class NewNewCollectiveDataset(data.Dataset):
                         bboxes.append(temp_boxes)
                         actions.append(temp_actions)
                     else:
-                        # img_paint_black = out_group_black([gw1, gh1, gw2, gh2], img)
-                        # images.append(img_paint_black)
-                        images.append(img)
+                        img_paint_black = out_group_black([gw1, gh1, gw2, gh2], img)
+                        images.append(img_paint_black)
+                        # images.append(img)
                         imagetodraw = Image.fromarray(img.transpose(1, 2, 0))
                         draw = ImageDraw.Draw(imagetodraw)
                         activities.append(GROUP_ACTIVITIES_ID[group['group_activity']])
