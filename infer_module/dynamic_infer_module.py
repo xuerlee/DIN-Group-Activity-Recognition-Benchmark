@@ -56,7 +56,7 @@ class Dynamic_Person_Inference(nn.Module):
 
             if self.dynamic_sampling:
                 ratio_p_conv = nn.Conv2d(in_channels = in_dim,
-                                         out_channels = 2*kernel_size[0]*kernel_size[1],
+                                         out_channels = 2*kernel_size[0]*kernel_size[1], # output dimension: kernel size
                                          kernel_size = kernel_size,
                                          dilation = ratio,
                                          stride = stride,
@@ -70,7 +70,7 @@ class Dynamic_Person_Inference(nn.Module):
 
             if self.scale_factor:
                 ratio_scale_conv = nn.Conv2d(in_channels = in_dim,
-                                             out_channels = kernel_size[0]*kernel_size[1],
+                                             out_channels = kernel_size[0]*kernel_size[1],  # output dimension: kernel size
                                              kernel_size = kernel_size,
                                              dilation = ratio,
                                              stride = stride,
@@ -183,7 +183,7 @@ class Dynamic_Person_Inference(nn.Module):
         return ft_infer
 
 
-    def dynamic_infer_ratio(self, person_features, ratio):
+    def  dynamic_infer_ratio(self, person_features, ratio):
         '''
         :param person_features: [B, NFB, T, N]
         :param ratio:
@@ -194,7 +194,7 @@ class Dynamic_Person_Inference(nn.Module):
 
         # Dynamic relation matrix prediction using original features
         if self.scale_factor:
-            scale = self.scale_conv[str(ratio)](person_features).permute(0, 2, 3, 1) # shape [B, T, N, k2]
+            scale = self.scale_conv[str(ratio)](person_features).permute(0, 2, 3, 1) # shape [B, T, N, k2]  # every person feature has (kernel size) number of features
             scale = F.softmax(scale, dim = -1)
 
         # Dynamic walk prediction using original features

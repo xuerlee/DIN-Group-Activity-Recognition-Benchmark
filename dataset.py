@@ -46,14 +46,13 @@ def return_dataset(cfg):
 
         test_anns=new_new_collective_read_dataset(cfg.data_path, cfg.test_seqs)
         test_frames=new_new_collective_all_frames(test_anns)
-
         training_set=NewNewCollectiveDataset(train_anns,train_frames,
                                       cfg.data_path,cfg.image_size,cfg.out_size,
-                                      num_frames = cfg.num_frames, is_training=True,is_finetune=(cfg.training_stage==1))
+                                      num_frames = cfg.num_frames, num_boxes = cfg.num_boxes, is_training=True,is_finetune=(cfg.training_stage==1))
 
         validation_set=NewNewCollectiveDataset(test_anns,test_frames,
                                       cfg.data_path,cfg.image_size,cfg.out_size,
-                                      num_frames = cfg.num_frames, is_training=False,is_finetune=(cfg.training_stage==1))
+                                      num_frames = cfg.num_frames, num_boxes = cfg.num_boxes, is_training=False,is_finetune=(cfg.training_stage==1))
 
     else:
         assert False

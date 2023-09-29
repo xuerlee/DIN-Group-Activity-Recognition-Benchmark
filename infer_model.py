@@ -1139,8 +1139,8 @@ class Dynamic_new_new_collective(nn.Module):
         self.cfg = cfg
         T, N = cfg.num_frames, cfg.num_boxes
         self.T = T
-        D = self.cfg.emb_features
-        K = self.cfg.crop_size[0]
+        D = self.cfg.emb_features  # num of embedded features
+        K = self.cfg.crop_size[0]  # size of interaction filed
         NFB = self.cfg.num_features_boxes
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
 
@@ -1162,7 +1162,7 @@ class Dynamic_new_new_collective(nn.Module):
 
         self.roi_align = RoIAlign(*self.cfg.crop_size, sampling_ratio=-1)
         self.fc_emb_1 = nn.Linear(K * K * D, NFB)
-        self.nl_emb_1 = nn.LayerNorm([NFB])
+        self.nl_emb_1 = nn.LayerNorm([NFB])  # layer normalization
 
         #self.gcn_list = torch.nn.ModuleList([GCN_Module(self.cfg) for i in range(self.cfg.gcn_layers)])
         if self.cfg.lite_dim:
@@ -1300,12 +1300,12 @@ class Dynamic_new_new_collective(nn.Module):
         bboxes_num_in = bboxes_num_in.reshape(B, T)  # B,T,
         for b in range(B):
             N = bboxes_num_in[b][0]
-            boxes_features = boxes_features_all[b, :, :N, :].reshape(1, T, N, -1)  # 1,T,N,NFB
+            boxes_features = boxes_features_all[b, :, :N, :].reshape(1, T, N, -1)  # 1,T,N,NFB  # collapse
             # boxes_positions = boxes_in[b, :, :N, :].reshape(T * N, 4)  # T*N, 4
 
             # Dynamic graph inference
 
-            graph_boxes_features = self.DPI(boxes_features)
+            graph_boxes_features = self.DPI(boxes_features)  # dynamic graph features
             torch.cuda.empty_cache()
 
             # cat graph_boxes_features with boxes_features
