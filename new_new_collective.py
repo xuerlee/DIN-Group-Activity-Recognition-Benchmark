@@ -28,7 +28,8 @@ FRAMES_SIZE = {1: (480, 720), 2: (480, 720), 3: (480, 720), 4: (480, 720), 10: (
 
 IDIVIDUAL_ACTIVITIES = ['standing', 'jogging', 'dancing', 'walking', 'biking', 'none']  # individual activity
 # SECOND_ACTIVITIES = ['crossing', 'waiting', 'queueing', 'walking', 'talking', 'None']
-GROUP_ACTIVITIES = ['dancing', 'queuing', 'jogging', 'talking', 'none']  # group activity
+# GROUP_ACTIVITIES = ['dancing', 'queuing', 'jogging', 'talking', 'none']  # group activity
+GROUP_ACTIVITIES = ['dancing', 'queuing', 'jogging', 'talking']  # group activity
 
 IDIVIDUAL_ACTIVITIES_ID = {a: i for i, a in enumerate(IDIVIDUAL_ACTIVITIES)}
 # SECOND_ACTIONS_ID = {a: i for i, a in enumerate(SECOND_ACTIVITIES)}
