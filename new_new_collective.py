@@ -508,7 +508,7 @@ class NewNewCollectiveDataset(data.Dataset):
                         # plt.show()
                         real_bboxes_num.append(len(temp_boxes))
                         while len(temp_boxes) != self.num_boxes:
-                            temp_boxes.append([-2, -2, -2, -2])
+                            temp_boxes.append([0, 0, 0, 0])
                             temp_actions.append(5)
                         bboxes_num.append(len(temp_boxes))
                         bboxes.append(temp_boxes)
@@ -591,6 +591,7 @@ class NewNewCollectiveDataset(data.Dataset):
         B_activities = []
         B_actions = []
         B_bboxes_num = []
+        B_real_bboxes_num = []
         if self.is_finetune:
             if self.is_training:
                 num_frames = 1
@@ -600,34 +601,39 @@ class NewNewCollectiveDataset(data.Dataset):
             num_frames = self.num_frames
 
         for i, item in enumerate(batch):
-            images, bboxes, actions, activities, bboxes_num, _, _ = item  # sequence 1
+            images, bboxes, actions, activities, bboxes_num, real_bboxes_num, _ = item  # sequence 1
             images = np.array(images)
             bboxes = np.array(bboxes, dtype=np.float64)
             actions = np.array(actions, dtype=np.int32)
             activities = np.array(activities, dtype=np.int32)
             bboxes_num = np.array(bboxes_num, dtype=np.int32)
+            real_bboxes_num = np.array(real_bboxes_num, dtype=np.int32)
             images = torch.from_numpy(images).float().to(self.device)
             bboxes = torch.from_numpy(bboxes).float().to(self.device)
             actions = torch.from_numpy(actions).long().to(self.device)
             activities = torch.from_numpy(activities).long().to(self.device)
             bboxes_num = torch.from_numpy(bboxes_num).int().to(self.device)
+            real_bboxes_num = torch.from_numpy(real_bboxes_num).int().to(self.device)
 
             images = re_organize_seq(images, num_frames)
             bboxes = re_organize_seq(bboxes, num_frames)
             actions = re_organize_seq(actions, num_frames)
             activities = re_organize_seq(activities, num_frames)
             bboxes_num = re_organize_seq(bboxes_num, num_frames)
+            real_bboxes_num = re_organize_seq(real_bboxes_num, num_frames)
             B_images.append(images)
             B_bboxes.append(bboxes)
             B_activities.append(activities)
             B_actions.append(actions)
             B_bboxes_num.append(bboxes_num)
+            B_real_bboxes_num.append(real_bboxes_num)
 
         B_images = torch.cat(B_images)
         B_bboxes = torch.cat(B_bboxes)
         B_activities = torch.cat(B_activities)
         B_actions = torch.cat(B_actions)
         B_bboxes_num = torch.cat(B_bboxes_num)
+        B_real_bboxes_num = torch.cat(B_real_bboxes_num)
 
 
 
@@ -654,8 +660,7 @@ class NewNewCollectiveDataset(data.Dataset):
         # B_bboxes_num = torch.from_numpy(B_bboxes_num).int()
 
 
-        return B_images, B_bboxes, B_actions, B_activities, B_bboxes_num
-
+        return B_images, B_bboxes, B_actions, B_activities, B_bboxes_num, B_real_bboxes_num
 
 
 

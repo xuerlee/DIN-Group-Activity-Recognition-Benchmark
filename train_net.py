@@ -320,7 +320,7 @@ def train_collective(data_loader, model, device, optimizer, epoch, cfg, writer):
             activities_in=activities_in[:,0].reshape(batch_size,)
         
         # Predict actions
-        actions_loss=F.cross_entropy(actions_scores,actions_in,weight=None)  
+        actions_loss=F.cross_entropy(actions_scores,actions_in,weight=None)
         actions_labels=torch.argmax(actions_scores,dim=1)  #B*T*N,
         actions_correct=torch.sum(torch.eq(actions_labels.int(),actions_in.int()).float())
 
@@ -455,14 +455,15 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         batch_size = batch_data[0].shape[0]
         num_frames = batch_data[0].shape[1]
         # num_frames = 1
+        real_bboxes_num = batch_data[-1]
 
         # forward
-        actions_scores, activities_scores = model((batch_data[0], batch_data[1], batch_data[-1]))  # Tensors: stacked images, stacked bboxes, stacked nums
+        actions_scores, activities_scores = model((batch_data[0], batch_data[1], batch_data[4]))  # Tensors: stacked images, stacked bboxes, stacked nums
 
 
         actions_in = batch_data[2].reshape((batch_size, num_frames, cfg.num_boxes))
         activities_in = batch_data[3].reshape((batch_size, num_frames))
-        bboxes_num = batch_data[-1].reshape(batch_size, num_frames)
+        bboxes_num = batch_data[4].reshape(batch_size, num_frames)
 
         actions_in_nopad = []
         if cfg.training_stage == 1:
@@ -484,12 +485,17 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
 
 
         # Predict actions
-        actions_loss = F.cross_entropy(actions_scores, actions_in, weight=None)
+        weights = torch.where(actions_in == 5, 0, 1)
+        # actions_loss = F.cross_entropy(actions_scores, actions_in, weight=None)  # average cross entropy loss
+        # print('F:', actions_scores, actions_in, actions_loss)
+        actions_loss = cross_entropy(actions_scores, actions_in, weights)
+        # print('utils:', actions_scores, actions_in, actions_loss)
         actions_labels = torch.argmax(actions_scores, dim=1)  # B*T*N,
         actions_correct = torch.sum(torch.eq(actions_labels.int(), actions_in.int()).float())
 
         # Predict activities
         activities_loss = F.cross_entropy(activities_scores, activities_in)
+
         activities_labels = torch.argmax(activities_scores, dim=1)  # B*T,
         activities_correct = torch.sum(torch.eq(activities_labels.int(), activities_in.int()).float())
 
@@ -502,7 +508,7 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
 
         # Total loss
         total_loss = activities_loss + cfg.actions_loss_weight * actions_loss
-        loss_meter.update(total_loss.item(), batch_size)
+        loss_meter.update(total_loss.item(), batch_size) # update method: val * bathc size，then add it in sum，and update the counter. finally calculate the total avg。
 
         writer.add_scalar('Training loss', total_loss, i * epoch)
         writer.add_scalar('Activities loss', activities_loss, i * epoch)

@@ -1,4 +1,5 @@
 import torch
+import torch.nn.functional as F
 import time
 import numpy as np
 import torchvision.transforms as transforms
@@ -40,6 +41,13 @@ def re_organize_seq(seq, num_frames):
     tmp = seq.reshape(num_frames, -1, *shape[1:])
     result = tmp.permute(1, 0, *range(2, tmp.dim()))
     return result
+
+def cross_entropy(logit, target, weights):
+    probs = F.softmax(logit, dim=1)
+    basic_losses = -torch.log(torch.gather(probs, 1, target.unsqueeze(-1)).squeeze())
+    weighted_losses = torch.mul(basic_losses, weights)
+    loss = torch.mean(weighted_losses)
+    return loss
 
 # def prep_images(images):
 #     """

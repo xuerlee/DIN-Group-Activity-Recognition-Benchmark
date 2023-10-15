@@ -520,7 +520,7 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         # actions_scores,activities_scores=model((batch_data[0],batch_data[1],batch_data[4]))
         activities_scores = model((batch_data[0], batch_data[1], batch_data[4]))
         activities_in = batch_data[3].reshape((batch_size, num_frames))
-        bboxes_num = batch_data[-1].reshape(batch_size, num_frames)
+        bboxes_num = batch_data[4].reshape(batch_size, num_frames)
 
         # actions_in = batch_data[2].reshape((batch_size,num_frames,cfg.num_boxes))
         # actions_in_nopad=[]
