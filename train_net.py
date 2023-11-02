@@ -491,11 +491,12 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         actions_loss = cross_entropy(actions_scores, actions_in, weights)
         # print('utils:', actions_scores, actions_in, actions_loss)
         actions_labels = torch.argmax(actions_scores, dim=1)  # B*T*N,
+        actions_labels[actions_labels == 5] = 100
         actions_correct = torch.sum(torch.eq(actions_labels.int(), actions_in.int()).float())
 
         # Predict activities
         activities_loss = F.cross_entropy(activities_scores, activities_in)
-
+        # print(activities_scores)
         activities_labels = torch.argmax(activities_scores, dim=1)  # B*T,
         activities_correct = torch.sum(torch.eq(activities_labels.int(), activities_in.int()).float())
 
