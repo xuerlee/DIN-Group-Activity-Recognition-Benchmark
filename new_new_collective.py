@@ -101,6 +101,7 @@ def new_new_collective_read_annotations(path, sid):
                             # 'second_activity': second_activity,
                             'bboxes': bboxes
                         })
+    # print(annotations)
 
     return annotations
 
@@ -449,7 +450,6 @@ class NewNewCollectiveDataset(data.Dataset):
             # actions.append(temp_actions)
             # activities.append(temp_activities)
             # print('bboxes:', bboxes)
-
             if len(self.anns[sid][src_fid]['groups']) > 0:
                 for group in self.anns[sid][src_fid]['groups']:
                     gg_id = int(group['group_id'])
@@ -458,7 +458,7 @@ class NewNewCollectiveDataset(data.Dataset):
                     # gw1, gh1, gw2, gh2 = gx1 * OW, gy1 * OH, gx2 * OW, gy2 * OH
                     gw1, gh1, gw2, gh2 = gx1 * img.shape[2], gy1 * img.shape[1], gx2 * img.shape[2], gy2 * img.shape[1]
                     # print('xyxy', gx1 * img.shape[2], gy1 * img.shape[1], gx2 * img.shape[2], gy2 * img.shape[1])
-                    if (gw1 > gw2 or gh1 > gh2 or (gw2-gw1)*(gh2-gh2)<10) and len(self.anns[sid][src_fid]['groups']) == 1:
+                    if (gw1 > gw2 or gh1 > gh2) and len(self.anns[sid][src_fid]['groups']) == 1:
                         group_flag = 0
                         # activities.append(4)
                         # images.append(img)
