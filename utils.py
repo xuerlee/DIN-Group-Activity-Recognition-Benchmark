@@ -148,8 +148,8 @@ def show_epoch_info(phase, log_path, info):
     else:
         print_log(log_path, '%s at epoch #%d'%(phase, info['epoch']))
         
-    print_log(log_path, 'Group Activity Accuracy: %.2f%%, Loss: %.5f, Using %.1f seconds'%(
-                info['activities_acc'], info['loss'], info['time']))
+    print_log(log_path, 'Group Activity Accuracy: %.2f%%, Action Accuracy: %.2f%%, Loss: %.5f, Using %.1f seconds'%(
+                info['activities_acc'], info['actions_acc'], info['loss'], info['time']))
 
     if 'activities_conf' in info.keys():
         print_log(log_path, info['activities_conf'])
