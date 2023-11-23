@@ -578,7 +578,10 @@ def test_new_new_collective(data_loader, model, device, epoch, cfg):
             weights = torch.where(actions_in == 5, 0, 1)
             actions_loss = cross_entropy(actions_scores, actions_in, weights)
             actions_labels = torch.argmax(actions_scores, dim=1)  # ALL_N,
-            actions_correct = torch.sum(torch.eq(actions_labels.int(), actions_in.int()).float())
+
+            mask = actions_labels != 5
+            actions_correct = torch.sum(torch.eq(actions_labels[mask].int(), actions_in[mask].int()).float())
+            # actions_correct = torch.sum(torch.eq(actions_labels.int(), actions_in.int()).float())
 
             # Predict activities
             activities_loss = F.cross_entropy(activities_scores, activities_in)

@@ -2,6 +2,7 @@ from backbone.backbone import *
 from utils import *
 # from roi_align.roi_align import RoIAlign      # RoIAlign module
 from torchvision.ops import RoIAlign
+import matplotlib.pyplot as plt
 
 
 class Basenet_volleyball(nn.Module):
@@ -263,6 +264,12 @@ class Basenet_collective(nn.Module):
         #                                     boxes_idx_flat)  #B*T*MAX_N, D, K, K,
         boxes_features_all = self.roi_align(features_multiscale,
                                             boxes_in_flat_idx)
+
+        # plt.imshow(boxes_features_all.clone().detach().cpu().numpy()[20].mean(axis=0),cmap='viridis')
+        # plt.colorbar()
+        # plt.title("Selected Feature Map Slice Visualization")
+        # plt.show()
+
         boxes_features_all=boxes_features_all.reshape(B*T, MAX_N,-1)  #B*T,MAX_N, D*K*K
 
         # Embedding 
@@ -312,9 +319,9 @@ class Basenet_new_new_collective(nn.Module):
         super(Basenet_new_new_collective, self).__init__()
         self.cfg = cfg
 
-        D = self.cfg.emb_features
-        K = self.cfg.crop_size[0]
-        NFB = self.cfg.num_features_boxes
+        D = self.cfg.emb_features  # 512
+        K = self.cfg.crop_size[0]  # 5, 5 crop of roi align
+        NFB = self.cfg.num_features_boxes  # 1024
 
 
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
@@ -336,11 +343,11 @@ class Basenet_new_new_collective(nn.Module):
 
         self.roi_align = RoIAlign(*self.cfg.crop_size, sampling_ratio=-1)
 
-        self.fc_emb_1 = nn.Linear(K * K * D, NFB)
+        self.fc_emb_1 = nn.Linear(K * K * D, NFB)  # 5*5*512, 1024
         self.dropout_emb_1 = nn.Dropout(p=self.cfg.train_dropout_prob)
         #         self.nl_emb_1=nn.LayerNorm([NFB])
 
-        self.fc_actions = nn.Linear(NFB, self.cfg.num_actions)
+        self.fc_actions = nn.Linear(NFB, self.cfg.num_actions)  # 1024, num_actions
         self.fc_activities = nn.Linear(NFB, self.cfg.num_activities)
 
         # use fc layers to regress the actions and activities directly
@@ -368,15 +375,14 @@ class Basenet_new_new_collective(nn.Module):
 
     def forward(self, batch_data):
         images_in, boxes_in, bboxes_num_in = batch_data
-
         # read config parameters
         B = images_in.shape[0]  # batch_size
         # T = 1  # num_frames but now its the groups number
         T = images_in.shape[1]
-        H, W = self.cfg.image_size
-        OH, OW = self.cfg.out_size
-        MAX_N = self.cfg.num_boxes
-        NFB = self.cfg.num_features_boxes
+        H, W = self.cfg.image_size  # 480, 720
+        OH, OW = self.cfg.out_size  # 15, 23
+        MAX_N = self.cfg.num_boxes  # 13
+        NFB = self.cfg.num_features_boxes  # 1024
         NFR, NFG = self.cfg.num_features_relation, self.cfg.num_features_gcn
         EPS = 1e-5
 
@@ -397,16 +403,22 @@ class Basenet_new_new_collective(nn.Module):
         # Pre-precess first
         images_in_flat = prep_images(images_in_flat)
         outputs = self.backbone(images_in_flat)
+        '''
+        list with 1 length, each shape: [B*T, 512, 15, 23]
+        512 channels, 15 and 23 is the size of output features
+        '''
 
         # Build multiscale features
         features_multiscale = []
         for features in outputs:
-            if features.shape[2:4] != torch.Size([OH, OW]):
+            if features.shape[2:4] != torch.Size([OH, OW]):  # interpolate output features
                 features = F.interpolate(features, size=(OH, OW), mode='bilinear', align_corners=True)
             features_multiscale.append(features)
 
         features_multiscale = torch.cat(features_multiscale, dim=1)  # B*T, D, OH, OW
-
+        '''
+        features_multiscale.size() [B*T, 512, 15, 23]
+        '''
         boxes_in_flat = torch.reshape(boxes_in, (B * T * MAX_N, 4))  # B*T*MAX_N, 4
 
         boxes_idx = [i * torch.ones(MAX_N, dtype=torch.int) for i in range(B * T)]
@@ -414,7 +426,7 @@ class Basenet_new_new_collective(nn.Module):
         boxes_idx_flat = torch.reshape(boxes_idx, (B * T * MAX_N,))  # B*T*MAX_N,
 
         expanded_boxes_idx = boxes_idx_flat.unsqueeze(1)
-        boxes_in_flat_idx = torch.cat((expanded_boxes_idx, boxes_in_flat), dim=1)
+        boxes_in_flat_idx = torch.cat((expanded_boxes_idx, boxes_in_flat), dim=1)  # B*T*MAX_N, 5
 
         # RoI Align
         boxes_in_flat.requires_grad = False
@@ -427,36 +439,44 @@ class Basenet_new_new_collective(nn.Module):
         #                                     boxes_idx_flat)  # B*T*MAX_N, D, K, K,
         boxes_features_all = self.roi_align(features_multiscale,
                                             boxes_in_flat_idx)
+        # plt.imshow(boxes_features_all.clone().detach().cpu().numpy()[20].mean(axis=0),cmap='viridis')
+        # plt.colorbar()
+        # plt.title("Selected Feature Map Slice Visualization")
+        # plt.show()
+        '''
+        B*T*MAX_N, D(channels 512), K(roi crop size), K
+        '''
         boxes_features_all = boxes_features_all.reshape(B * T, MAX_N, -1)  # B*T,MAX_N, D*K*K
 
         # Embedding
-        boxes_features_all = self.fc_emb_1(boxes_features_all)  # B*T,MAX_N, NFB
+        boxes_features_all = self.fc_emb_1(boxes_features_all)  # B*T,MAX_N, NFB (K * K * D -> NFB)
         boxes_features_all = F.relu(boxes_features_all)
-        boxes_features_all = self.dropout_emb_1(boxes_features_all)
+        boxes_features_all = self.dropout_emb_1(boxes_features_all)  # B*T,MAX_N, NFB
 
         actions_scores = []
         activities_scores = []
-        bboxes_num_in = bboxes_num_in.reshape(B * T, )  # B*T,
+        bboxes_num_in = bboxes_num_in.reshape(B * T, )  # B*T
         for bt in range(B * T):
-            N = bboxes_num_in[bt]
-            boxes_features = boxes_features_all[bt, :N, :].reshape(1, N, NFB)  # 1,N,NFB
+            N = bboxes_num_in[bt]  # MAX_N
+            boxes_features = boxes_features_all[bt, :N, :].reshape(1, N, NFB)  # 1,MAX_N,NFB
 
             boxes_states = boxes_features
 
             NFS = NFB
 
             # Predict actions
-            boxes_states_flat = boxes_states.reshape(-1, NFS)  # 1*N, NFS
-            actn_score = self.fc_actions(boxes_states_flat)  # 1*N, actn_num
+            boxes_states_flat = boxes_states.reshape(-1, NFS)  # MAX_N, NFB
+            actn_score = self.fc_actions(boxes_states_flat)  # MAX_N, actn_num
             actions_scores.append(actn_score)
 
             # Predict activities
-            boxes_states_pooled, _ = torch.max(boxes_states, dim=1)  # 1, NFS
-            boxes_states_pooled_flat = boxes_states_pooled.reshape(-1, NFS)  # 1, NFS
+            boxes_states_pooled, _ = torch.max(boxes_states, dim=1)  # 1, NFB  maxpooling of the output feature of fc with N dimension
+            boxes_states_pooled_flat = boxes_states_pooled.reshape(-1, NFS)  # 1, NFB
             acty_score = self.fc_activities(boxes_states_pooled_flat)  # 1, acty_num
             activities_scores.append(acty_score)
 
         actions_scores = torch.cat(actions_scores, dim=0)  # ALL_N,actn_num
+        # [B*T*MAX_N, num_actions]
         activities_scores = torch.cat(activities_scores, dim=0)  # B*T,acty_num
 
         #         print(actions_scores.shape)
