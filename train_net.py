@@ -510,7 +510,8 @@ def train_new_new_collective(data_loader, model, device, optimizer, epoch, cfg, 
         activities_meter.update(activities_accuracy, activities_scores.shape[0])
 
         # Total loss
-        total_loss = activities_loss + cfg.actions_loss_weight * actions_loss
+        # total_loss = activities_loss + cfg.actions_loss_weight * actions_loss
+        total_loss = actions_loss
         loss_meter.update(total_loss.item(), batch_size) # update method: val * bathc size，then add it in sum，and update the counter. finally calculate the total avg。
 
         writer.add_scalar('Training loss', total_loss, i * epoch)
