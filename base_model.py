@@ -347,7 +347,11 @@ class Basenet_new_new_collective(nn.Module):
         self.dropout_emb_1 = nn.Dropout(p=self.cfg.train_dropout_prob)
         #         self.nl_emb_1=nn.LayerNorm([NFB])
 
-        self.fc_actions = nn.Linear(NFB, self.cfg.num_actions)  # 1024, num_actions
+        # self.fc_actions = nn.Linear(NFB, self.cfg.num_actions)  # 1024, num_actions
+        self.fc_actions = nn.Sequential(
+            nn.Linear(NFB, NFB),
+            nn.ReLU(),
+            nn.Linear(NFB, self.cfg.num_actions))  # 1024, num_actions
         self.fc_activities = nn.Linear(NFB, self.cfg.num_activities)
 
         # use fc layers to regress the actions and activities directly
