@@ -44,9 +44,9 @@ def return_dataset(cfg):
         train_anns=new_new_collective_read_dataset(cfg.data_path, cfg.train_seqs)
         train_frames=new_new_collective_all_frames(train_anns)
 
-        test_anns=new_new_collective_read_dataset(cfg.data_path, cfg.test_seqs)
-        test_frames=new_new_collective_all_frames(test_anns)
-        training_set=NewNewCollectiveDataset(train_anns,train_frames,
+        test_anns=new_new_collective_read_dataset(cfg.data_path, cfg.test_seqs) # annotations
+        test_frames=new_new_collective_all_frames(test_anns) # frame and sequence ids
+        training_set=NewNewCollectiveDataset(train_anns,train_frames,  # dataset class
                                       cfg.data_path,cfg.image_size,cfg.out_size,
                                       num_frames = cfg.num_frames, num_boxes = cfg.num_boxes, is_training=True,is_finetune=(cfg.training_stage==1))
 

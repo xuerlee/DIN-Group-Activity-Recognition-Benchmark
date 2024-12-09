@@ -39,7 +39,7 @@ def train_net(cfg):
     show_config(cfg)  # set batch_size in train.....py
     
     # Reading dataset
-    training_set,validation_set = return_dataset(cfg)
+    training_set,validation_set = return_dataset(cfg)  # dataset class
     
     if cfg.dataset_name == 'new_new_collective':
         params = {
@@ -54,7 +54,7 @@ def train_net(cfg):
             'shuffle': True,
             'num_workers': 0,
         }
-    training_loader=data.DataLoader(training_set,**params)
+    training_loader=data.DataLoader(training_set,**params)  # input dataset class into dataloader
     
     params['batch_size']=cfg.test_batch_size
     validation_loader=data.DataLoader(validation_set,**params)
